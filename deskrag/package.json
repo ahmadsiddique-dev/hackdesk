@@ -1,0 +1,12 @@
+{
+  "name": "deskrag",
+  "version": "1.0.0",
+  "description": "This project is for the rag support in cyberifydesk main app ",
+  "license": "ISC",
+  "author": "Ahmad Siddique",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
