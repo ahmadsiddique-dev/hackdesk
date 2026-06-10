@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -36,6 +37,7 @@ export default function Page() {
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
     if (email) {
+      // TODO: Connect deployment trigger logic to backend database API and spin up workspace
       setSubmitted(true)
       setEmail("")
     }
@@ -79,17 +81,17 @@ export default function Page() {
   return (
     <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300 font-sans selection:bg-primary/30">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none overflow-hidden">
-        <div className="absolute top-[-200px] left-1/4 w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[150px] dark:bg-blue-600/15" />
-        <div className="absolute top-[-100px] right-1/4 w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-[130px] dark:bg-sky-500/15" />
+        <div className="absolute top-[-200px] left-1/4 w-[600px] h-[600px] rounded-full bg-orange-600/10 blur-[150px] dark:bg-orange-600/15" />
+        <div className="absolute top-[-100px] right-1/4 w-[500px] h-[500px] rounded-full bg-amber-500/10 blur-[130px] dark:bg-amber-500/15" />
       </div>
 
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/70 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20">
+            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-600 to-amber-500 text-white shadow-lg shadow-orange-500/20">
               <IconSparkles className="size-5" />
             </div>
-            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">
+            <span className="text-xl font-bold tracking-tight bg-linear-to-r from-foreground to-foreground/80 bg-clip-text">
               Cyberify Desk
             </span>
           </div>
@@ -115,7 +117,7 @@ export default function Page() {
                     {resolvedTheme === "dark" ? (
                       <IconSun className="size-5 text-yellow-400" />
                     ) : (
-                      <IconMoon className="size-5 text-indigo-950" />
+                      <IconMoon className="size-5 text-orange-950" />
                     )}
                   </Button>
                 </TooltipTrigger>
@@ -125,11 +127,11 @@ export default function Page() {
               </Tooltip>
             )}
 
-            <Button variant="ghost" className="hidden sm:inline-flex rounded-full text-sm font-semibold">
-              Sign In
+            <Button variant="ghost" asChild className="hidden sm:inline-flex rounded-full text-sm font-semibold">
+              <Link href="/signin">Sign In</Link>
             </Button>
-            <Button className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-500/10 font-semibold px-5">
-              Get Started
+            <Button asChild className="rounded-full bg-gradient-to-r from-orange-600 to-amber-500 text-white hover:from-orange-500 hover:to-amber-400 shadow-md shadow-orange-500/10 font-semibold px-5">
+              <Link href="/signup">Get Started</Link>
             </Button>
           </div>
         </div>
@@ -137,14 +139,14 @@ export default function Page() {
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <section className="py-20 md:py-32 flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/5 px-4 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 mb-6 backdrop-blur-sm animate-pulse">
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/5 px-4 py-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 mb-6 backdrop-blur-sm animate-pulse">
             <IconSparkles className="size-3.5" />
             <span>Introducing Agent Autopilot 2.0</span>
           </div>
 
           <h1 className="max-w-4xl text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-foreground mb-6">
             Customer Support, <br />
-            <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">
               Supercharged by AI.
             </span>
           </h1>
@@ -154,7 +156,7 @@ export default function Page() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-20 w-full justify-center">
-            <Button size="lg" className="w-full sm:w-auto rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-lg shadow-blue-500/20 px-8 py-6 text-base">
+            <Button size="lg" className="w-full sm:w-auto rounded-full bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white font-semibold shadow-lg shadow-orange-500/20 px-8 py-6 text-base">
               Get Started For Free
               <IconArrowRight className="size-5" />
             </Button>
@@ -178,7 +180,7 @@ export default function Page() {
                 <div className="flex flex-col gap-4">
                   <div className="p-4 rounded-xl border border-border/40 bg-card/40">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold text-blue-500 uppercase">New Support Ticket</span>
+                      <span className="text-xs font-bold text-orange-500 uppercase">New Support Ticket</span>
                       <span className="text-xs text-muted-foreground">ID: #4092</span>
                     </div>
                     <h3 className="text-sm font-semibold mb-1">RAG Knowledge Base failed to parse custom PDF manual</h3>
@@ -191,7 +193,7 @@ export default function Page() {
                     <span className="text-xs font-semibold text-muted-foreground">RAG Knowledge Attachment</span>
                     <div className="flex items-center justify-between p-3 rounded-lg border border-dashed border-border/60 bg-muted/20">
                       <div className="flex items-center gap-2">
-                        <IconFileText className="size-5 text-blue-500" />
+                        <IconFileText className="size-5 text-orange-500" />
                         <span className="text-xs font-medium">kb_manual_v2.pdf</span>
                       </div>
                       <span className="text-2xs bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full font-bold">Uploaded</span>
@@ -208,15 +210,15 @@ export default function Page() {
               <div className="p-6 flex flex-col gap-4 bg-muted/5">
                 <div className="flex items-center justify-between border-b border-border/40 pb-4">
                   <div className="flex items-center gap-2">
-                    <IconRobot className="size-4.5 text-blue-500" />
+                    <IconRobot className="size-4.5 text-orange-500" />
                     <span className="text-xs font-bold uppercase tracking-wider">Cyberify AI Copilot</span>
                   </div>
-                  <span className="text-2xs bg-blue-500/15 text-blue-500 px-2.5 py-0.5 rounded-full font-bold">Active</span>
+                  <span className="text-2xs bg-orange-500/15 text-orange-500 px-2.5 py-0.5 rounded-full font-bold">Active</span>
                 </div>
 
                 <div className="flex flex-col gap-3.5">
-                  <div className="p-3.5 rounded-xl border border-blue-500/20 bg-blue-500/5">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">
+                  <div className="p-3.5 rounded-xl border border-orange-500/20 bg-orange-500/5">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 mb-1">
                       <IconBrain className="size-4" />
                       <span>AI Ticket Summary</span>
                     </div>
@@ -228,7 +230,7 @@ export default function Page() {
                   <div className="p-3.5 rounded-xl border border-border/40 bg-card/60">
                     <div className="flex items-center justify-between text-xs font-bold mb-2">
                       <div className="flex items-center gap-1">
-                        <IconMessage2 className="size-4 text-indigo-500" />
+                        <IconMessage2 className="size-4 text-orange-500" />
                         <span>Suggested Reply Draft</span>
                       </div>
                       <span className="text-2xs text-muted-foreground">98% confidence</span>
@@ -238,7 +240,7 @@ export default function Page() {
                     </p>
                     <div className="flex justify-end gap-2">
                       <Button size="xs" variant="outline" className="text-2xs font-semibold rounded-full">Refine</Button>
-                      <Button size="xs" className="text-2xs font-semibold rounded-full bg-indigo-600 text-white hover:bg-indigo-500">Insert Draft</Button>
+                      <Button size="xs" className="text-2xs font-semibold rounded-full bg-orange-600 text-white hover:bg-orange-500">Insert Draft</Button>
                     </div>
                   </div>
                 </div>
@@ -249,7 +251,7 @@ export default function Page() {
 
         <section id="features" className="py-20 md:py-28 border-t border-border/40">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase mb-3">Enterprise Power</h2>
+            <h2 className="text-xs font-bold tracking-widest text-orange-600 dark:text-orange-400 uppercase mb-3">Enterprise Power</h2>
             <p className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground mb-4">
               Everything you need to automate support.
             </p>
@@ -259,8 +261,8 @@ export default function Page() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all">
-              <div className="flex size-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5 transition-all">
+              <div className="flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 mb-5 group-hover:scale-110 transition-transform">
                 <IconBrain />
               </div>
               <h3 className="text-lg font-bold mb-2">AI Ticket Assistant</h3>
@@ -269,8 +271,8 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all">
-              <div className="flex size-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5 transition-all">
+              <div className="flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 mb-5 group-hover:scale-110 transition-transform">
                 <IconMessage2 />
               </div>
               <h3 className="text-lg font-bold mb-2">One-Click AI Replies</h3>
@@ -279,8 +281,8 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all">
-              <div className="flex size-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5 transition-all">
+              <div className="flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 mb-5 group-hover:scale-110 transition-transform">
                 <IconDatabase />
               </div>
               <h3 className="text-lg font-bold mb-2">Instant RAG Knowledge Base</h3>
@@ -289,8 +291,8 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all">
-              <div className="flex size-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5 transition-all">
+              <div className="flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 mb-5 group-hover:scale-110 transition-transform">
                 <IconGitCommit />
               </div>
               <h3 className="text-lg font-bold mb-2">Transparent Ticket Timelines</h3>
@@ -303,7 +305,7 @@ export default function Page() {
 
         <section id="demo" className="py-20 md:py-28 border-t border-border/40">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase mb-3">Live Simulation</h2>
+            <h2 className="text-xs font-bold tracking-widest text-orange-600 dark:text-orange-400 uppercase mb-3">Live Simulation</h2>
             <p className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground mb-4">
               Explore your new workspace.
             </p>
@@ -331,7 +333,7 @@ export default function Page() {
                         onClick={() => setSelectedTicketId(ticket.id)}
                         className={`w-full text-left p-4 rounded-xl border transition-all ${
                           selectedTicketId === ticket.id
-                            ? "border-blue-500 bg-blue-500/5"
+                            ? "border-orange-500 bg-orange-500/5"
                             : "border-border/40 hover:border-border/80 bg-background/50"
                         }`}
                       >
@@ -383,7 +385,7 @@ export default function Page() {
                             )}
                             <div className={`flex size-5 shrink-0 items-center justify-center rounded-full ${
                               item.status.includes("Solved") || item.status.includes("Autotriage")
-                                ? "bg-blue-600 text-white"
+                                ? "bg-orange-600 text-white"
                                 : "bg-muted text-muted-foreground border border-border"
                             }`}>
                               <IconCircleCheck className="size-3" />
@@ -408,7 +410,7 @@ export default function Page() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-1 flex flex-col gap-4">
                   <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Agent Queue</span>
-                  <div className="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
+                  <div className="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-2xs bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded-full font-bold">Needs Reply</span>
                       <span className="text-2xs text-muted-foreground">Priority: High</span>
@@ -430,18 +432,18 @@ export default function Page() {
                 <div className="lg:col-span-2 flex flex-col gap-6 p-6 rounded-xl border border-border/40 bg-background/50">
                   <div className="flex items-center justify-between border-b border-border/40 pb-4">
                     <div className="flex items-center gap-2">
-                      <IconRobot className="size-5 text-blue-500 animate-bounce" />
+                      <IconRobot className="size-5 text-orange-500 animate-bounce" />
                       <div>
                         <span className="text-2xs text-muted-foreground uppercase font-bold tracking-wider">AI Copilot Analysis</span>
-                        <h3 className="text-sm font-bold text-blue-500 dark:text-blue-400">Autocompleting Slack webhook ticket</h3>
+                        <h3 className="text-sm font-bold text-orange-500 dark:text-orange-400">Autocompleting Slack webhook ticket</h3>
                       </div>
                     </div>
                     <span className="text-2xs bg-emerald-500/10 text-emerald-500 px-2 py-1 rounded font-bold uppercase">Ready to send</span>
                   </div>
 
                   <div className="flex flex-col gap-5">
-                    <div className="p-4 rounded-xl border border-blue-500/10 bg-blue-500/5">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">
+                    <div className="p-4 rounded-xl border border-orange-500/10 bg-orange-500/5">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 mb-1">
                         <IconSparkles className="size-4" />
                         <span>AI Autotriage Summary</span>
                       </div>
@@ -461,7 +463,7 @@ export default function Page() {
 
                     <div className="flex justify-end gap-3 pt-2">
                       <Button variant="outline" className="rounded-full font-semibold">Decline</Button>
-                      <Button className="rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-md shadow-blue-500/10">
+                      <Button className="rounded-full bg-orange-600 hover:bg-orange-500 text-white font-semibold shadow-md shadow-orange-500/10">
                         Approve & Send Reply
                       </Button>
                     </div>
@@ -474,7 +476,7 @@ export default function Page() {
 
         <section id="pricing" className="py-20 md:py-28 border-t border-border/40">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase mb-3">Simple Pricing</h2>
+            <h2 className="text-xs font-bold tracking-widest text-orange-600 dark:text-orange-400 uppercase mb-3">Simple Pricing</h2>
             <p className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground mb-4">
               Transparent scaling for teams of all sizes.
             </p>
@@ -484,7 +486,7 @@ export default function Page() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="rounded-2xl border border-border/40 bg-card/30 p-8 flex flex-col gap-6 justify-between hover:border-blue-500/20 transition-colors">
+            <div className="rounded-2xl border border-border/40 bg-card/30 p-8 flex flex-col gap-6 justify-between hover:border-orange-500/20 transition-colors">
               <div>
                 <h3 className="text-lg font-bold text-muted-foreground">Starter</h3>
                 <div className="mt-4 flex items-baseline gap-1">
@@ -500,11 +502,12 @@ export default function Page() {
                   <div className="flex items-center gap-2"><IconChecks className="size-4 text-emerald-500" /><span>1 Helpdesk Agent Seat</span></div>
                 </div>
               </div>
+              {/* TODO: Link Starter tier checkout redirect to Stripe checkout configuration */}
               <Button variant="outline" className="w-full rounded-full font-semibold">Start Free</Button>
             </div>
 
-            <div className="relative rounded-2xl border-2 border-blue-500 bg-blue-500/5 p-8 flex flex-col gap-6 justify-between shadow-xl shadow-blue-500/5">
-              <div className="absolute top-0 right-6 -translate-y-1/2 bg-blue-600 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+            <div className="relative rounded-2xl border-2 border-orange-500 bg-orange-500/5 p-8 flex flex-col gap-6 justify-between shadow-xl shadow-orange-500/5">
+              <div className="absolute top-0 right-6 -translate-y-1/2 bg-orange-600 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
                 Most Popular
               </div>
               <div>
@@ -517,16 +520,16 @@ export default function Page() {
                   Ideal for growing support operations looking to automate deflection.
                 </p>
                 <div className="mt-6 border-t border-border/40 pt-6 flex flex-col gap-3 text-xs">
-                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-blue-500" /><span>Unlimited AI Summaries & Drafts</span></div>
-                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-blue-500" /><span>10 RAG Manuals (No limit)</span></div>
-                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-blue-500" /><span>5 Helpdesk Agent Seats included</span></div>
-                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-blue-500" /><span>Slack & Email Integrations</span></div>
+                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-orange-500" /><span>Unlimited AI Summaries & Drafts</span></div>
+                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-orange-500" /><span>10 RAG Manuals (No limit)</span></div>
+                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-orange-500" /><span>5 Helpdesk Agent Seats included</span></div>
+                  <div className="flex items-center gap-2"><IconChecks className="size-4 text-orange-500" /><span>Slack & Email Integrations</span></div>
                 </div>
               </div>
-              <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-md shadow-blue-500/10">Upgrade to Growth</Button>
+              <Button className="w-full rounded-full bg-orange-600 hover:bg-orange-500 text-white font-semibold shadow-md shadow-orange-500/10">Upgrade to Growth</Button>
             </div>
 
-            <div className="rounded-2xl border border-border/40 bg-card/30 p-8 flex flex-col gap-6 justify-between hover:border-blue-500/20 transition-colors">
+            <div className="rounded-2xl border border-border/40 bg-card/30 p-8 flex flex-col gap-6 justify-between hover:border-orange-500/20 transition-colors">
               <div>
                 <h3 className="text-lg font-bold text-muted-foreground">Scale</h3>
                 <div className="mt-4 flex items-baseline gap-1">
@@ -550,7 +553,7 @@ export default function Page() {
 
         <section className="py-20 md:py-28">
           <div className="relative rounded-3xl border border-border/40 bg-card/30 overflow-hidden px-8 py-16 text-center max-w-5xl mx-auto flex flex-col items-center shadow-2xl">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-orange-600/10 blur-[100px] pointer-events-none" />
 
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 relative">
               Ready to scale your support operations?
@@ -569,12 +572,12 @@ export default function Page() {
                 <Input
                   type="email"
                   required
-                  placeholder="Enter your work email"
+                  placeholder="Enter your work email" // TODO: Implement Email logic
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-full border-border/80 bg-background/70 px-5 py-6 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-blue-500/50"
+                  className="rounded-full border-border/80 bg-background/70 px-5 py-6 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-orange-500/50"
                 />
-                <Button type="submit" className="w-full sm:w-auto rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-7 py-6 text-sm shadow-md shadow-blue-500/10">
+                <Button type="submit" className="w-full sm:w-auto rounded-full bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white font-semibold px-7 py-6 text-sm shadow-md shadow-orange-500/10">
                   Deploy Your Desk
                 </Button>
               </form>
@@ -592,7 +595,7 @@ export default function Page() {
 
           <div className="flex items-center gap-1">
             <span>Built with Next.js, Tailwind & Shadcn UI by</span>
-            <span className="font-semibold text-foreground underline decoration-blue-500/50 underline-offset-4">Ahmad Siddique</span>
+            <span className="font-semibold text-foreground underline decoration-orange-500/50 underline-offset-4">Ahmad Siddique</span>
           </div>
         </div>
       </footer>
