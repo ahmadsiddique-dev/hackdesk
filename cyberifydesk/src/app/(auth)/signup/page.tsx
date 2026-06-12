@@ -7,6 +7,8 @@ import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signUpSchema, type SignUpFormValues } from "@/lib/validations/auth"
 import { Button } from "@/components/ui/button"
+import { useApi } from "@/hooks/apiClient"
+import axios from "axios"
 import {
   Field,
   FieldGroup,
@@ -41,9 +43,21 @@ import { ThemeSwitch } from "@/components/elements/ThemeSwitch"
 
 export default function Page() {
   const [currentStep, setCurrentStep] = React.useState(1)
-  const [generatedOtp, setGeneratedOtp] = React.useState("")
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
+
+  const { loading: apiLoading, error: apiError, execute } = useApi(
+    React.useCallback((payload: Omit<SignUpFormValues, "otp" | "confirmPassword"> & { role: string; otp?: string }) =>
+      axios.post("/api/auth/agent/signup", payload).then((res) => res.data),
+      []
+    )
+  )
+
+  const { loading: verifyLoading, error: verifyError, execute: verifyExecute, data: verifyData } = useApi(
+    React.useCallback((payload: { email: string; otp: string }) =>
+      axios.patch("/api/auth/agent/signup", payload).then((res) => res.data),
+      []
+    )
+  )
 
   const {
     register,
@@ -64,12 +78,6 @@ export default function Page() {
     },
   })
 
-  const handleGenerateOtp = () => {
-    const code = Math.floor(100000 + Math.random() * 900000).toString()
-    setGeneratedOtp(code)
-    setValue("otp", code, { shouldValidate: true })
-  }
-
   const handleNextStep = async (e: React.MouseEvent) => {
     e.preventDefault()
     if (currentStep === 1) {
@@ -78,14 +86,20 @@ export default function Page() {
         "email",
         "password",
         "confirmPassword",
+        "organizationName",
       ])
       if (isValid) {
-        setCurrentStep(2)
-      }
-    } else if (currentStep === 2) {
-      const isValid = await trigger("otp")
-      if (isValid) {
-        setCurrentStep(3)
+        const values = control._formValues
+        const res = await execute({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+          organizationName: values.organizationName,
+          role: "agent",
+        })
+        if (res && res.success) {
+          setCurrentStep(2)
+        }
       }
     }
   }
@@ -97,19 +111,20 @@ export default function Page() {
     }
   }
 
-  const onSubmit = (data: SignUpFormValues) => {
-    setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSubmitting(false)
+  const onSubmit = async (data: SignUpFormValues) => {
+    console.log("Submitting data:", data)
+    const { email, otp } = data;
+    const res = await verifyExecute({ email, otp  })
+    if (res && res.success) {
       setSuccess(true)
-    }, 1500)
+    }
   }
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center bg-background px-4 font-sans text-foreground transition-colors duration-300 selection:bg-primary/30">
-      <div className="pointer-events-none absolute top-0 left-1/2 h-[600px] w-full max-w-7xl -translate-x-1/2 overflow-hidden">
-        <div className="absolute top-[-200px] left-1/4 h-[600px] w-[600px] rounded-full bg-orange-600/10 blur-[150px] dark:bg-orange-600/15" />
-        <div className="absolute top-[-100px] right-1/4 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[130px] dark:bg-amber-500/15" />
+      <div className="pointer-events-none absolute top-0 left-1/2 h-150 w-full max-w-7xl -translate-x-1/2 overflow-hidden">
+        <div className="absolute -top-50 left-1/4 h-150 w-150 rounded-full bg-orange-600/10 blur-[150px] dark:bg-orange-600/15" />
+        <div className="absolute -top-25 right-1/4 h-125 w-125 rounded-full bg-amber-500/10 blur-[130px] dark:bg-amber-500/15" />
       </div>
 
       <header className="absolute top-0 flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -148,12 +163,7 @@ export default function Page() {
                 <div
                   className="absolute top-0 left-0 h-full bg-orange-500 transition-all duration-500"
                   style={{
-                    width:
-                      currentStep === 1
-                        ? "0%"
-                        : currentStep === 2
-                          ? "50%"
-                          : "100%",
+                    width: currentStep === 1 ? "0%" : "100%",
                   }}
                 />
               </div>
@@ -164,9 +174,7 @@ export default function Page() {
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
                     currentStep > 1
                       ? "border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-500/20"
-                      : currentStep === 1
-                        ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
-                        : "border-border text-muted-foreground"
+                      : "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
                   )}
                 >
                   {currentStep > 1 ? <IconCheck className="size-4" /> : "1"}
@@ -174,12 +182,10 @@ export default function Page() {
                 <span
                   className={cn(
                     "text-2xs absolute top-8 font-semibold whitespace-nowrap transition-colors duration-300",
-                    currentStep >= 1
-                      ? "text-foreground"
-                      : "text-muted-foreground"
+                    "text-foreground"
                   )}
                 >
-                  Account
+                  Details
                 </span>
               </div>
 
@@ -187,47 +193,22 @@ export default function Page() {
                 <div
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
-                    currentStep > 2
-                      ? "border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-500/20"
-                      : currentStep === 2
-                        ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
-                        : "border-border text-muted-foreground"
+                    currentStep === 2
+                      ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
+                      : "border-border text-muted-foreground"
                   )}
                 >
-                  {currentStep > 2 ? <IconCheck className="size-4" /> : "2"}
+                  2
                 </div>
                 <span
                   className={cn(
                     "text-2xs absolute top-8 font-semibold whitespace-nowrap transition-colors duration-300",
-                    currentStep >= 2
+                    currentStep === 2
                       ? "text-foreground"
                       : "text-muted-foreground"
                   )}
                 >
                   Verify
-                </span>
-              </div>
-
-              <div className="relative z-10 flex w-12 flex-col items-center">
-                <div
-                  className={cn(
-                    "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
-                    currentStep === 3
-                      ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
-                      : "border-border text-muted-foreground"
-                  )}
-                >
-                  3
-                </div>
-                <span
-                  className={cn(
-                    "text-2xs absolute top-8 font-semibold whitespace-nowrap transition-colors duration-300",
-                    currentStep === 3
-                      ? "text-foreground"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  Organization
                 </span>
               </div>
             </div>
@@ -328,24 +309,34 @@ export default function Page() {
                     </InputGroup>
                     <FieldError>{errors.confirmPassword?.message}</FieldError>
                   </Field>
+
+                  <Field data-invalid={!!errors.organizationName}>
+                    <FieldLabel htmlFor="organizationName">
+                      Organization Name
+                    </FieldLabel>
+                    <InputGroup>
+                      <InputGroupAddon align="inline-start">
+                        <IconBuilding className="size-4" />
+                      </InputGroupAddon>
+                      <InputGroupInput
+                        id="organizationName"
+                        type="text"
+                        placeholder="Cyberify AI"
+                        {...register("organizationName")}
+                        aria-invalid={!!errors.organizationName}
+                      />
+                    </InputGroup>
+                    <FieldError>{errors.organizationName?.message}</FieldError>
+                  </Field>
                 </div>
               )}
 
               {currentStep === 2 && (
                 <div className="flex animate-in flex-col gap-5 duration-300 fade-in slide-in-from-bottom-2">
                   <Field data-invalid={!!errors.otp}>
-                    <div className="mb-1.5 flex items-center justify-between">
-                      <FieldLabel htmlFor="otp">
-                        6-Digit Verification Code (OTP)
-                      </FieldLabel>
-                      <button
-                        type="button"
-                        onClick={handleGenerateOtp}
-                        className="text-2xs font-semibold text-orange-500 hover:underline"
-                      >
-                        Generate OTP
-                      </button>
-                    </div>
+                    <FieldLabel htmlFor="otp">
+                      6-Digit Verification Code (OTP)
+                    </FieldLabel>
                     <Controller
                       control={control}
                       name="otp"
@@ -371,50 +362,19 @@ export default function Page() {
                       )}
                     />
                     <FieldDescription>
-                      Enter the code sent to your email. You can click Generate
-                      OTP for a mock code.
+                      Enter the code sent to your email.
                     </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
-                  </Field>
-
-                  {generatedOtp && (
-                    <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-xs text-emerald-500">
-                      <IconCircleCheck className="size-4 shrink-0" />
-                      <span>
-                        Mock OTP generated:{" "}
-                        <strong className="font-mono tracking-widest">
-                          {generatedOtp}
-                        </strong>{" "}
-                        (Auto-filled)
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {currentStep === 3 && (
-                <div className="flex animate-in flex-col gap-5 duration-300 fade-in slide-in-from-bottom-2">
-                  <Field data-invalid={!!errors.organizationName}>
-                    <FieldLabel htmlFor="organizationName">
-                      Organization Name
-                    </FieldLabel>
-                    <InputGroup>
-                      <InputGroupAddon align="inline-start">
-                        <IconBuilding className="size-4" />
-                      </InputGroupAddon>
-                      <InputGroupInput
-                        id="organizationName"
-                        type="text"
-                        placeholder="Cyberify AI"
-                        {...register("organizationName")}
-                        aria-invalid={!!errors.organizationName}
-                      />
-                    </InputGroup>
-                    <FieldError>{errors.organizationName?.message}</FieldError>
                   </Field>
                 </div>
               )}
             </FieldGroup>
+
+            {apiError && (
+              <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-3 text-xs text-destructive">
+                {apiError}
+              </div>
+            )}
 
             <div className="mt-4 flex gap-3">
               {currentStep > 1 && (
@@ -429,22 +389,32 @@ export default function Page() {
                 </Button>
               )}
 
-              {currentStep < 3 ? (
+              {currentStep < 2 ? (
                 <Button
                   type="button"
                   onClick={handleNextStep}
+                  disabled={apiLoading}
                   className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-5 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
                 >
-                  <span>Continue</span>
-                  <IconChevronRight className="ml-1 size-4" />
+                  {apiLoading ? (
+                    <>
+                      <IconLoader2 className="size-4 animate-spin" />
+                      <span>Sending OTP...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Continue</span>
+                      <IconChevronRight className="ml-1 size-4" />
+                    </>
+                  )}
                 </Button>
               ) : (
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={apiLoading}
                   className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-5 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
                 >
-                  {isSubmitting ? (
+                  {apiLoading ? (
                     <>
                       <IconLoader2 className="size-4 animate-spin" />
                       <span>Creating Space...</span>
