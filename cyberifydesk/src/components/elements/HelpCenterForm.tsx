@@ -4,14 +4,15 @@ import * as React from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldGroup, FieldError } from "@/components/ui/field"
+import {
+  Field,
+  FieldLabel,
+  FieldGroup,
+  FieldError,
+} from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  IconSend,
-  IconLoader2,
-  IconCircleCheck,
-} from "@tabler/icons-react"
+import { IconSend, IconLoader2, IconCircleCheck } from "@tabler/icons-react"
 import {
   Select,
   SelectContent,
@@ -21,10 +22,20 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ticketSchema, type TicketFormValues } from "@/lib/validations/auth"
+import { useCustomerStore } from "@/store/customer"
+import { useApi } from "@/hooks/apiClient"
+import axios from "axios"
 
+type TicketPayloadType = {
+  customerId: string
+  organization: string | null | undefined
+  description: string
+  title: string
+  priority: "low" | "medium" | "high"
+}
 export function HelpCenterForm() {
-  const [loading, setLoading] = React.useState(false)
-  const [success, setSuccess] = React.useState(false)
+  const customer = useCustomerStore((state) => state.user)
+  const organization = useCustomerStore((state) => state.user?.organization)
 
   const {
     register,
@@ -41,29 +52,46 @@ export function HelpCenterForm() {
     },
   })
 
+  const {
+    data: ticketData,
+    error: ticketError,
+    execute: ticketExecute,
+    loading: ticketLoading,
+  } = useApi(
+    React.useCallback(
+      (payload: TicketPayloadType) =>
+        axios.post("/api/hc/create-ticket", payload),
+      []
+    )
+  )
+
   const onSubmit = async (data: TicketFormValues) => {
-    setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setLoading(false)
-    setSuccess(true)
+    const payload = {
+      ...data,
+      customerId: customer?._id,
+      organization: organization,
+    }
+    await ticketExecute(payload)
   }
 
-  if (success) {
+  if (ticketData) {
     return (
-      <div className="flex flex-col items-center justify-center text-center py-12 px-6 border border-emerald-500/20 bg-emerald-500/5 rounded-2xl animate-in fade-in zoom-in duration-300">
-        <div className="flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-4">
+      <div className="flex animate-in flex-col items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/5 px-6 py-12 text-center duration-300 fade-in zoom-in">
+        <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
           <IconCircleCheck className="size-8" />
         </div>
-        <h3 className="text-lg font-bold text-foreground mb-2">Ticket Submitted</h3>
-        <p className="text-sm text-muted-foreground max-w-sm">
-          Your support request has been received. We will get back to you shortly.
+        <h3 className="mb-2 text-lg font-bold text-foreground">
+          Ticket Submitted
+        </h3>
+        <p className="max-w-sm text-sm text-muted-foreground">
+          Your support request has been received. We will get back to you
+          shortly.
         </p>
         <Button
           onClick={() => {
-            setSuccess(false)
             reset()
           }}
-          className="mt-6 rounded-full border border-border/80 bg-background hover:bg-muted text-xs font-semibold px-6 py-2"
+          className="mt-6 rounded-full border border-border/80 bg-background px-6 py-2 text-xs font-semibold hover:bg-muted"
           variant="outline"
         >
           Submit Another Ticket
@@ -82,7 +110,7 @@ export function HelpCenterForm() {
               id="hc-title"
               type="text"
               placeholder="What issue are you experiencing?"
-              className="text-xs h-9 dark:bg-input/30"
+              className="h-9 text-xs dark:bg-input/30"
               {...register("title")}
             />
             <FieldError>{errors.title?.message}</FieldError>
@@ -94,13 +122,10 @@ export function HelpCenterForm() {
               control={control}
               name="priority"
               render={({ field }) => (
-                <Select
-                  value={field.value}
-                  onValueChange={field.onChange}
-                >
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger
                     id="hc-priority"
-                    className="w-full text-xs h-9 dark:bg-input/30"
+                    className="h-9 w-full text-xs dark:bg-input/30"
                   >
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
@@ -124,7 +149,7 @@ export function HelpCenterForm() {
             id="hc-desc"
             rows={5}
             placeholder="Please describe your problem in detail..."
-            className="text-xs min-h-24 dark:bg-input/30"
+            className="min-h-24 text-xs dark:bg-input/30"
             {...register("description")}
           />
           <FieldError>{errors.description?.message}</FieldError>
@@ -134,17 +159,17 @@ export function HelpCenterForm() {
       <Button
         id="hc-submit-btn"
         type="submit"
-        disabled={loading}
-        className="w-full mt-2 rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400 text-xs h-9"
+        disabled={ticketLoading}
+        className="mt-2 h-9 w-full rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 text-xs font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
       >
-        {loading ? (
+        {ticketLoading ? (
           <>
-            <IconLoader2 className="size-4 animate-spin mr-1.5" />
+            <IconLoader2 className="mr-1.5 size-4 animate-spin" />
             <span>Submitting Ticket...</span>
           </>
         ) : (
           <>
-            <IconSend className="size-4 mr-1.5" />
+            <IconSend className="mr-1.5 size-4" />
             <span>Submit Ticket</span>
           </>
         )}
@@ -152,6 +177,3 @@ export function HelpCenterForm() {
     </form>
   )
 }
-
-
-
