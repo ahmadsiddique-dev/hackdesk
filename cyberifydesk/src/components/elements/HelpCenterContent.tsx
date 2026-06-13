@@ -21,7 +21,7 @@ export function HelpCenterContent({ organizationName }: HelpCenterContentProps) 
 
   if (!mounted) {
     return (
-      <div className="flex items-center justify-center min-h-[300px]">
+      <div className="flex items-center justify-center min-h-75">
         <div className="size-6 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
       </div>
     )

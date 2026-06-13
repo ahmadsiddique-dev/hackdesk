@@ -1,28 +1,47 @@
 "use client"
 
 import * as React from "react"
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
+import { Field, FieldLabel, FieldGroup, FieldError } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import {
-  IconUser,
-  IconMail,
   IconSend,
   IconLoader2,
   IconCircleCheck,
 } from "@tabler/icons-react"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { ticketSchema, type TicketFormValues } from "@/lib/validations/auth"
 
 export function HelpCenterForm() {
   const [loading, setLoading] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
-  const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    subject: "",
-    priority: "medium",
-    description: "",
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm<TicketFormValues>({
+    resolver: zodResolver(ticketSchema),
+    defaultValues: {
+      title: "",
+      priority: "medium",
+      description: "",
+    },
   })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = async (data: TicketFormValues) => {
     setLoading(true)
     await new Promise((resolve) => setTimeout(resolve, 1500))
     setLoading(false)
@@ -42,13 +61,7 @@ export function HelpCenterForm() {
         <Button
           onClick={() => {
             setSuccess(false)
-            setFormData({
-              name: "",
-              email: "",
-              subject: "",
-              priority: "medium",
-              description: "",
-            })
+            reset()
           }}
           className="mt-6 rounded-full border border-border/80 bg-background hover:bg-muted text-xs font-semibold px-6 py-2"
           variant="outline"
@@ -60,111 +73,78 @@ export function HelpCenterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="hc-name" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Full Name
-          </label>
-          <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-muted-foreground pointer-events-none">
-              <IconUser className="size-4" />
-            </span>
-            <input
-              id="hc-name"
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <FieldGroup className="gap-5">
+        <div className="grid gap-5 md:grid-cols-3">
+          <Field className="md:col-span-2" data-invalid={!!errors.title}>
+            <FieldLabel htmlFor="hc-title">Title</FieldLabel>
+            <Input
+              id="hc-title"
               type="text"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="John Doe"
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder:text-muted-foreground/60"
+              placeholder="What issue are you experiencing?"
+              className="text-xs h-9 dark:bg-input/30"
+              {...register("title")}
             />
-          </div>
+            <FieldError>{errors.title?.message}</FieldError>
+          </Field>
+
+          <Field data-invalid={!!errors.priority}>
+            <FieldLabel htmlFor="hc-priority">Priority</FieldLabel>
+            <Controller
+              control={control}
+              name="priority"
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger
+                    id="hc-priority"
+                    className="w-full text-xs h-9 dark:bg-input/30"
+                  >
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <FieldError>{errors.priority?.message}</FieldError>
+          </Field>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="hc-email" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Email Address
-          </label>
-          <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-muted-foreground pointer-events-none">
-              <IconMail className="size-4" />
-            </span>
-            <input
-              id="hc-email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="john@example.com"
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder:text-muted-foreground/60"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-3">
-        <div className="flex flex-col gap-2 md:col-span-2">
-          <label htmlFor="hc-subject" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Subject
-          </label>
-          <input
-            id="hc-subject"
-            type="text"
-            required
-            value={formData.subject}
-            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-            placeholder="What issue are you experiencing?"
-            className="w-full px-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder:text-muted-foreground/60"
+        <Field data-invalid={!!errors.description}>
+          <FieldLabel htmlFor="hc-desc">Description</FieldLabel>
+          <Textarea
+            id="hc-desc"
+            rows={5}
+            placeholder="Please describe your problem in detail..."
+            className="text-xs min-h-24 dark:bg-input/30"
+            {...register("description")}
           />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label htmlFor="hc-priority" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Priority
-          </label>
-          <select
-            id="hc-priority"
-            value={formData.priority}
-            onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="hc-desc" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-          Description
-        </label>
-        <textarea
-          id="hc-desc"
-          required
-          rows={5}
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Please describe your problem in detail..."
-          className="w-full px-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder:text-muted-foreground/60 resize-y"
-        />
-      </div>
+          <FieldError>{errors.description?.message}</FieldError>
+        </Field>
+      </FieldGroup>
 
       <Button
         id="hc-submit-btn"
         type="submit"
         disabled={loading}
-        className="w-full mt-2 rounded-xl bg-linear-to-r from-orange-600 to-amber-500 py-6 font-semibold text-white shadow-lg shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400 transition-all"
+        className="w-full mt-2 rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400 text-xs h-9"
       >
         {loading ? (
           <>
-            <IconLoader2 className="size-4 animate-spin mr-2" />
+            <IconLoader2 className="size-4 animate-spin mr-1.5" />
             <span>Submitting Ticket...</span>
           </>
         ) : (
           <>
-            <IconSend className="size-4 mr-2" />
+            <IconSend className="size-4 mr-1.5" />
             <span>Submit Ticket</span>
           </>
         )}
@@ -172,3 +152,6 @@ export function HelpCenterForm() {
     </form>
   )
 }
+
+
+

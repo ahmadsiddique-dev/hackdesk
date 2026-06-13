@@ -2,8 +2,6 @@ import * as React from "react"
 import { BackgroundBlur } from "@/components/elements/BackgroundBlur"
 import { HelpCenterContent } from "@/components/elements/HelpCenterContent"
 import { HelpCenterHeader } from "@/components/elements/HelpCenterHeader"
-import Image from "next/image"
-import Link from "next/link"
 
 export default async function HelpCenterPage({
   params,
@@ -29,7 +27,7 @@ export default async function HelpCenterPage({
             {orgName} Help Center
           </h1>
           <p className="text-sm text-muted-foreground max-w-lg">
-            Welcome to our support portal. If you need help with our services, please submit a ticket below or chat with our live agents.
+            Welcome to our support portal. If you need help with our services, please submit a ticket below for agent support or chat with our AI assistant.
           </p>
         </div>
 

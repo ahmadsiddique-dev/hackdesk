@@ -7,9 +7,9 @@ export interface IUser extends Document {
   email: string
   password: string
   isVerified: boolean
-  organization?: string | null
+  organization: string | null
   role: "user" | "agent"
-  otp?: string | null
+  otp: string | null
   refreshToken: string | null
   isPasswordCorrect(password: string): Promise<boolean>
   generateAccessToken(): string

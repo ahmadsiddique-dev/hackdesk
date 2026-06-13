@@ -174,12 +174,6 @@ export function HelpCenterAuth({ organizationName }: HelpCenterAuthProps) {
     }
   }
 
-  const handleGenerateMockOtp = () => {
-    const code = Math.floor(100000 + Math.random() * 900000).toString()
-    setMockOtp(code)
-    setValue("otp", code, { shouldValidate: true })
-  }
-
   return (
     <div className="mx-auto w-full max-w-md border border-border/40 bg-card/30 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in duration-300">
       <div className="mb-6 text-center">
@@ -323,15 +317,8 @@ export function HelpCenterAuth({ organizationName }: HelpCenterAuthProps) {
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
           <Field data-invalid={!!errors.otp}>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-start">
               <FieldLabel htmlFor="otp">Verification Code (OTP)</FieldLabel>
-              <button
-                type="button"
-                onClick={handleGenerateMockOtp}
-                className="text-3xs font-semibold text-orange-500 hover:underline"
-              >
-                Generate OTP
-              </button>
             </div>
             <div className="flex justify-center py-2">
               <Controller
@@ -359,16 +346,6 @@ export function HelpCenterAuth({ organizationName }: HelpCenterAuthProps) {
             <FieldError>{errors.otp?.message}</FieldError>
           </Field>
 
-          {mockOtp && (
-            <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-2xs text-emerald-500">
-              <IconCircleCheck className="size-3.5 shrink-0" />
-              <span>
-                Mock OTP generated:{" "}
-                <strong className="font-mono tracking-widest">{mockOtp}</strong>{" "}
-                (Auto-filled)
-              </span>
-            </div>
-          )}
 
           {errorMsg && (
             <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-2.5 text-2xs text-destructive">

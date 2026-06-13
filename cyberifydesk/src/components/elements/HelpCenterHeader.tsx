@@ -8,6 +8,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { IconLogout, IconUser } from "@tabler/icons-react"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 interface HelpCenterHeaderProps {
   organizationName: string
@@ -18,6 +23,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
   const customerAccessToken = useCustomerStore((state) => state.accessToken)
   const clearCustomerAuth = useCustomerStore((state) => state.clearAuth)
   const [mounted, setMounted] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
@@ -68,15 +74,44 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                   Customer
                 </span>
               </div>
-              <Button
-                onClick={handleLogout}
-                variant="outline"
-                size="sm"
-                className="rounded-full border-border/80 text-xs font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 h-8 px-4"
-              >
-                <IconLogout className="mr-1.5 size-3.5" />
-                <span>Logout</span>
-              </Button>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full border-border/80 text-xs font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 h-8 px-4"
+                  >
+                    <IconLogout className="mr-1.5 size-3.5" />
+                    <span>Logout</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-56 p-4 flex flex-col gap-3 rounded-xl border border-border/40 bg-card/90 backdrop-blur-md shadow-2xl animate-in fade-in duration-200" align="end">
+                  <div className="flex flex-col gap-1">
+                    <p className="text-xs font-bold text-foreground">Confirm Logout</p>
+                    <p className="text-3xs text-muted-foreground">Are you sure you want to log out of your session?</p>
+                  </div>
+                  <div className="flex gap-2 justify-end">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setOpen(false)}
+                      className="h-7 text-3xs px-2.5 rounded-md border-border/60 hover:bg-muted font-medium"
+                    >
+                      No
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        setOpen(false)
+                        handleLogout()
+                      }}
+                      className="h-7 text-3xs px-2.5 rounded-md bg-linear-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 font-semibold text-white shadow-sm"
+                    >
+                      Yes
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           ) : (
             <Link
