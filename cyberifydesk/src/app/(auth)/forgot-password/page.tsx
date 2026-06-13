@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {
   forgotPasswordSchema,
   type ForgotPasswordFormValues,
-} from "@/lib/validations/auth"
+} from "@/schema/forgot-password.schema"
 import { Button } from "@/components/ui/button"
 import { useApi } from "@/hooks/apiClient"
 import axios from "axios"

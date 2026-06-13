@@ -61,7 +61,7 @@ export function SidebarMenuLinks() {
             <SidebarMenuButton tooltip={link.tooltip} isActive={isActive} asChild>
               <Link href={linkHref}>
                 <Icon className="size-5! transition-all duration-200 ease-linear group-data-[collapsible=icon]:size-4!" />
-                <span className="whitespace-nowrap text-xs transition-all duration-200 ease-linear opacity-100 max-w-[150px] group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 overflow-hidden">
+                <span className="whitespace-nowrap text-xs transition-all duration-200 ease-linear opacity-100 max-w-37.5 group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 overflow-hidden">
                   {link.label}
                 </span>
               </Link>

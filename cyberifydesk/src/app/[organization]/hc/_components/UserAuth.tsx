@@ -22,16 +22,13 @@ import {
   IconMail,
   IconLock,
   IconUser,
-  IconCircleCheck,
   IconLoader2,
 } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
-import {
-  customerSignInSchema,
-  customerSignUpSchema,
-} from "@/lib/validations/auth"
+import { customerSignInSchema } from "@/schema/customer-signin.schema"
+import { customerSignUpSchema } from "@/schema/customer-signup.schema"
 
-interface HelpCenterAuthProps {
+interface UserAuthProps {
   organizationName: string
 }
 
@@ -43,10 +40,9 @@ interface CustomerAuthFormValues {
   otp: string
 }
 
-export function HelpCenterAuth({ organizationName }: HelpCenterAuthProps) {
+export function UserAuth({ organizationName }: UserAuthProps) {
   const [tab, setTab] = React.useState<"signin" | "signup">("signin")
   const [step, setStep] = React.useState<1 | 2>(1)
-  const [mockOtp, setMockOtp] = React.useState("")
   const [errorMsg, setErrorMsg] = React.useState("")
 
   const setAuth = useCustomerStore((state) => state.setAuth)
@@ -75,7 +71,6 @@ export function HelpCenterAuth({ organizationName }: HelpCenterAuthProps) {
   React.useEffect(() => {
     reset()
     setErrorMsg("")
-    setMockOtp("")
   }, [tab, reset])
 
   const { loading: signinLoading, execute: executeSignIn } = useApi(
@@ -130,7 +125,6 @@ export function HelpCenterAuth({ organizationName }: HelpCenterAuthProps) {
         })
         if (res && res.success) {
           if (res.otp) {
-            setMockOtp(res.otp)
             setValue("otp", res.otp, { shouldValidate: true })
           }
           setStep(2)

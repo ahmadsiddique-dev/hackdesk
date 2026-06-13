@@ -1,5 +1,5 @@
 import { checkAgentAuth } from "@/lib/auth-check"
-import { DashboardHeader } from "@/components/elements/DashboardHeader"
+import { DashboardHeader } from "@/app/[organization]/(agent)/_components/DashboardHeader"
 import {
   Card,
   CardHeader,

@@ -1,4 +1,4 @@
-import dbConnect from "@/hooks/dbConnection"
+import dbConnect from "@/lib/dbConnection"
 import { sendOtpEmail } from "@/lib/sendEmail"
 import { User } from "@/models/User.model"
 import { cookies } from "next/headers"

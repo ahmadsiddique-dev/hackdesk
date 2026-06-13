@@ -1,4 +1,4 @@
-import dbConnect from "@/hooks/dbConnection"
+import dbConnect from "@/lib/dbConnection"
 import { User } from "@/models/User.model"
 import { NextResponse } from "next/server"
 import { catchAsyncRoute } from "@/lib/catchAsyncRoute"

@@ -1,5 +1,5 @@
 import { checkAgentAuth } from "@/lib/auth-check"
-import { DashboardHeader } from "@/components/elements/DashboardHeader"
+import { DashboardHeader } from "@/app/[organization]/(agent)/_components/DashboardHeader"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { BackgroundBlur } from "@/components/elements/BackgroundBlur"

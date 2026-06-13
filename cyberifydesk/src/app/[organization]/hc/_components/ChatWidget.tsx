@@ -86,7 +86,7 @@ export function ChatWidget() {
       {open && (
         <div
           id="chat-window"
-          className="absolute bottom-16 right-0 w-80 sm:w-96 h-[450px] flex flex-col rounded-2xl border border-border/40 bg-card/95 shadow-2xl backdrop-blur-md animate-in slide-in-from-bottom-5 duration-300"
+          className="absolute bottom-16 right-0 w-80 sm:w-96 h-112.5 flex flex-col rounded-2xl border border-border/40 bg-card/95 shadow-2xl backdrop-blur-md animate-in slide-in-from-bottom-5 duration-300"
         >
           <div className="flex items-center justify-between px-4 py-3 border-b border-border/40 bg-linear-to-r from-orange-600/10 to-amber-500/10 rounded-t-2xl">
             <div className="flex items-center gap-2">

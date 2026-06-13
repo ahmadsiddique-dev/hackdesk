@@ -1,0 +1,142 @@
+|-- public
+|   +-- logo.png
+|-- src
+|   |-- app
+|   |   |-- (auth)
+|   |   |   |-- forgot-password
+|   |   |   |   +-- page.tsx
+|   |   |   |-- signin
+|   |   |   |   +-- page.tsx
+|   |   |   +-- signup
+|   |   |       +-- page.tsx
+|   |   |-- api
+|   |   |   |-- auth
+|   |   |   |   |-- agent
+|   |   |   |   |   |-- forgot-password
+|   |   |   |   |   |   |-- new
+|   |   |   |   |   |   |   +-- route.ts
+|   |   |   |   |   |   +-- verify
+|   |   |   |   |   |       +-- route.ts
+|   |   |   |   |   |-- logout
+|   |   |   |   |   |   +-- route.ts
+|   |   |   |   |   |-- signin
+|   |   |   |   |   |   +-- route.ts
+|   |   |   |   |   |-- signup
+|   |   |   |   |   |   +-- route.ts
+|   |   |   |   |   +-- verify
+|   |   |   |   |       +-- route.ts
+|   |   |   |   +-- user
+|   |   |   +-- hc
+|   |   |       +-- create-ticket
+|   |   |           +-- route.ts
+|   |   |-- [organization]
+|   |   |   |-- (agent)
+|   |   |   |   |-- dashboard
+|   |   |   |   |   +-- page.tsx
+|   |   |   |   |-- tickets
+|   |   |   |   |   +-- page.tsx
+|   |   |   |   |-- _components
+|   |   |   |   |   |-- AgentHeaderMenu.tsx
+|   |   |   |   |   |-- DashboardHeader.tsx
+|   |   |   |   |   +-- SidebarMenuLinks.tsx
+|   |   |   |   +-- layout.tsx
+|   |   |   +-- hc
+|   |   |       |-- new-ticket
+|   |   |       |   +-- page.tsx
+|   |   |       |-- tickets
+|   |   |       |   +-- page.tsx
+|   |   |       |-- _components
+|   |   |       |   |-- ChatWidget.tsx
+|   |   |       |   |-- UserAuth.tsx
+|   |   |       |   |-- UserContent.tsx
+|   |   |       |   |-- UserForm.tsx
+|   |   |       |   |-- UserHeader.tsx
+|   |   |       |   +-- UserTicketsContent.tsx
+|   |   |       |-- layout.tsx
+|   |   |       +-- page.tsx
+|   |   |-- _landing_page_components
+|   |   |   |-- CTA.tsx
+|   |   |   |-- Demo.tsx
+|   |   |   |-- Features.tsx
+|   |   |   |-- Footer.tsx
+|   |   |   |-- Header.tsx
+|   |   |   |-- Hero.tsx
+|   |   |   |-- SubscribeForm.tsx
+|   |   |   +-- Testimonials.tsx
+|   |   |-- favicon.ico
+|   |   |-- globals.css
+|   |   |-- layout.tsx
+|   |   +-- page.tsx
+|   |-- components
+|   |   |-- elements
+|   |   |   |-- AuthLayout.tsx
+|   |   |   |-- BackgroundBlur.tsx
+|   |   |   |-- RouteGuard.tsx
+|   |   |   |-- theme-provider.tsx
+|   |   |   +-- ThemeSwitch.tsx
+|   |   +-- ui
+|   |       |-- badge.tsx
+|   |       |-- button.tsx
+|   |       |-- card.tsx
+|   |       |-- field.tsx
+|   |       |-- input-group.tsx
+|   |       |-- input-otp.tsx
+|   |       |-- input.tsx
+|   |       |-- label.tsx
+|   |       |-- popover.tsx
+|   |       |-- select.tsx
+|   |       |-- separator.tsx
+|   |       |-- sheet.tsx
+|   |       |-- sidebar.tsx
+|   |       |-- skeleton.tsx
+|   |       |-- table.tsx
+|   |       |-- tabs.tsx
+|   |       |-- textarea.tsx
+|   |       +-- tooltip.tsx
+|   |-- hooks
+|   |   |-- apiClient.ts
+|   |   |-- catchAsync.ts
+|   |   +-- use-mobile.ts
+|   |-- lib
+|   |   |-- api.ts
+|   |   |-- auth-check.ts
+|   |   |-- bcrypt.ts
+|   |   |-- catchAsyncRoute.ts
+|   |   |-- dbConnection.ts
+|   |   |-- sendEmail.tsx
+|   |   +-- utils.ts
+|   |-- models
+|   |   |-- Message.model.ts
+|   |   |-- Ticket.model.ts
+|   |   +-- User.model.ts
+|   |-- schema
+|   |   |-- common.schema.ts
+|   |   |-- customer-signin.schema.ts
+|   |   |-- customer-signup.schema.ts
+|   |   |-- forgot-password.schema.ts
+|   |   |-- signin.schema.ts
+|   |   |-- signup.schema.ts
+|   |   +-- ticket.schema.ts
+|   +-- store
+|       |-- customer.ts
+|       +-- user.ts
+|-- .env
+|-- .prettierignore
+|-- .prettierrc
+|-- AGENTS.md
+|-- components.json
+|-- eslint.config.mjs
+|-- next-env.d.ts
+|-- next.config.ts
+|-- package.json
+|-- pnpm-lock.yaml
+|-- postcss.config.mjs
+|-- README.md
+|-- structure.txt
+|-- test-resend.js
+|-- tsconfig.json
++-- tsconfig.tsbuildinfo
+
+
+Function
+function Get-Tree($Path=".", $MaxDepth=8, $CurrentDepth=0, $Indent="") { if ($CurrentDepth -lt $MaxDepth -and (Test-Path -LiteralPath $Path)) { $items = Get-ChildItem -LiteralPath $Path | Where-Object { $_.Name -notmatch "node_modules|\.next|\.git" }; $count = $items.Count; for ($i=0; $i -lt $count; $i++) { $item = $items[$i]; $isLast = ($i -eq $count - 1); $prefix = "|-- "; if ($isLast) { $prefix = "+-- " }; Write-Output "$Indent$prefix$($item.Name)"; if ($item.PSIsContainer) { $addIndent = "|   "; if ($isLast) { $addIndent = "    " }; Get-Tree $item.FullName $MaxDepth ($CurrentDepth+1) ($Indent + $addIndent) } } } } Get-Tree . 8 | Out-File "structure.txt" -Encoding ascii

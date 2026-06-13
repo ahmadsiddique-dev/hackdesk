@@ -1,4 +1,4 @@
-import dbConnect from "@/hooks/dbConnection"
+import dbConnect from "@/lib/dbConnection"
 import { User } from "@/models/User.model"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"

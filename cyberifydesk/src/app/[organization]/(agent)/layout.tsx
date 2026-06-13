@@ -12,7 +12,7 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar"
 import Image from "next/image"
-import { SidebarMenuLinks } from "@/components/elements/SidebarMenuLinks"
+import { SidebarMenuLinks } from "@/app/[organization]/(agent)/_components/SidebarMenuLinks"
 
 export default async function MainLayout({
   children,

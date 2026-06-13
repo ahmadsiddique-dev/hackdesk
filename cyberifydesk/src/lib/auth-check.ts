@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import jwt from "jsonwebtoken"
-import dbConnect from "@/hooks/dbConnection"
+import dbConnect from "./dbConnection"
 import { User } from "@/models/User.model"
 import { cache } from "react"
 

@@ -2,15 +2,15 @@
 
 import * as React from "react"
 import { useCustomerStore } from "@/store/customer"
-import { HelpCenterForm } from "./HelpCenterForm"
-import { HelpCenterAuth } from "./HelpCenterAuth"
+import { UserForm } from "./UserForm"
+import { UserAuth } from "./UserAuth"
 import { ChatWidget } from "./ChatWidget"
 
-interface HelpCenterContentProps {
+interface UserContentProps {
   organizationName: string
 }
 
-export function HelpCenterContent({ organizationName }: HelpCenterContentProps) {
+export function UserContent({ organizationName }: UserContentProps) {
   const accessToken = useCustomerStore((state) => state.accessToken)
   const user = useCustomerStore((state) => state.user)
   const [mounted, setMounted] = React.useState(false)
@@ -30,7 +30,7 @@ export function HelpCenterContent({ organizationName }: HelpCenterContentProps) 
   const isAuthenticated = !!accessToken && !!user?._id
 
   if (!isAuthenticated) {
-    return <HelpCenterAuth organizationName={organizationName} />
+    return <UserAuth organizationName={organizationName} />
   }
 
   return (
@@ -42,7 +42,7 @@ export function HelpCenterContent({ organizationName }: HelpCenterContentProps) 
         <p className="text-xs text-muted-foreground mb-6">
           Provide the details of your inquiry, and our support team will respond as quickly as possible.
         </p>
-        <HelpCenterForm />
+        <UserForm />
       </div>
       <ChatWidget />
     </>

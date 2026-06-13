@@ -6,8 +6,10 @@ import { useApi } from "@/hooks/apiClient"
 import { api } from "@/lib/api"
 import Image from "next/image"
 import Link from "next/link"
+import { useParams, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { IconLogout, IconUser } from "@tabler/icons-react"
+import { cn } from "@/lib/utils"
 import {
   Popover,
   PopoverContent,
@@ -24,6 +26,10 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
   const clearCustomerAuth = useCustomerStore((state) => state.clearAuth)
   const [mounted, setMounted] = React.useState(false)
   const [open, setOpen] = React.useState(false)
+
+  const params = useParams()
+  const pathname = usePathname()
+  const orgSlug = params?.organization as string
 
   React.useEffect(() => {
     setMounted(true)
@@ -49,17 +55,46 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
   return (
     <header className="border-b border-border/40 bg-card/25 backdrop-blur-md sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Image
-            src="/logo.png"
-            alt="Cyberify Desk Logo"
-            width={24}
-            height={24}
-            className="size-6 object-contain"
-          />
-          <span className="font-extrabold text-sm tracking-tight text-foreground">
-            Cyberify Desk
-          </span>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="Cyberify Desk Logo"
+              width={24}
+              height={24}
+              className="size-6 object-contain"
+            />
+            <span className="font-extrabold text-sm tracking-tight text-foreground mr-4">
+              Cyberify Desk
+            </span>
+          </div>
+
+          {isLoggedIn && (
+            <nav className="hidden sm:flex items-center gap-4">
+              <Link
+                href={`/${orgSlug}/hc/new-ticket`}
+                className={cn(
+                  "text-xs font-semibold transition-colors",
+                  pathname === `/${orgSlug}/hc/new-ticket`
+                    ? "text-orange-500 font-bold"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                New Ticket
+              </Link>
+              <Link
+                href={`/${orgSlug}/hc/tickets`}
+                className={cn(
+                  "text-xs font-semibold transition-colors",
+                  pathname === `/${orgSlug}/hc/tickets`
+                    ? "text-orange-500 font-bold"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                My Tickets
+              </Link>
+            </nav>
+          )}
         </div>
 
         <div className="flex items-center gap-4">

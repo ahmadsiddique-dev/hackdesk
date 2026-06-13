@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ticketSchema, type TicketFormValues } from "@/lib/validations/auth"
+import { ticketSchema, type TicketFormValues } from "@/schema/ticket.schema"
 import { useCustomerStore } from "@/store/customer"
 import { useApi } from "@/hooks/apiClient"
 import axios from "axios"
@@ -33,7 +33,7 @@ type TicketPayloadType = {
   title: string
   priority: "low" | "medium" | "high"
 }
-export function HelpCenterForm() {
+export function UserForm() {
   const customer = useCustomerStore((state) => state.user)
   const organization = useCustomerStore((state) => state.user?.organization)
 

@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono, Lora, Public_Sans } from "next/font/google"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/elements/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { RouteGuard } from "@/components/elements/RouteGuard"
 import { cn } from "@/lib/utils"

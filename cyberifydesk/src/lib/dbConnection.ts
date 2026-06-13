@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { catchAsync } from "./catchAsync"
+import { catchAsync } from "@/hooks/catchAsync"
 
 type ConnectionObject = {
   isConnected?: number

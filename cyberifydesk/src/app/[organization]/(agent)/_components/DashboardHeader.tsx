@@ -1,6 +1,6 @@
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
-import { AgentHeaderMenu } from "@/components/elements/AgentHeaderMenu"
+import { AgentHeaderMenu } from "@/app/[organization]/(agent)/_components/AgentHeaderMenu"
 
 export function DashboardHeader({
   title,

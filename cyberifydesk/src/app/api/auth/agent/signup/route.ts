@@ -1,6 +1,6 @@
 // TODO: Error handling and edge cases ( OTP expiration, rate limiting, and if not verified email can be used by anyone else )
 
-import dbConnect from "@/hooks/dbConnection"
+import dbConnect from "@/lib/dbConnection"
 import { User } from "@/models/User.model"
 import { sendOtpEmail } from "@/lib/sendEmail"
 import { NextResponse } from "next/server"
