@@ -36,7 +36,7 @@ import {
   IconChevronRight,
   IconChevronLeft,
 } from "@tabler/icons-react"
-import { cn } from "@/lib/utils"
+import { cn, slugify } from "@/lib/utils"
 import { AuthLayout } from "@/components/elements/AuthLayout"
 
 export default function Page() {
@@ -45,6 +45,7 @@ export default function Page() {
   const [generatedOtp, setGeneratedOtp] = React.useState("")
   const router = useRouter()
   const setAuth = useUserStore((state) => state.setAuth)
+  const user = useUserStore((state) => state.user)
 
   const {
     loading: apiLoading,
@@ -88,12 +89,13 @@ export default function Page() {
 
   React.useEffect(() => {
     if (loginSuccess) {
+      const orgSlug = user?.organization ? slugify(user.organization) : "default"
       const timer = setTimeout(() => {
-        router.push("/dashboard")
+        router.push(`/${orgSlug}/dashboard`)
       }, 2000)
       return () => clearTimeout(timer)
     }
-  }, [loginSuccess, router])
+  }, [loginSuccess, router, user?.organization])
 
   const handleGenerateOtp = () => {
     const code = Math.floor(100000 + Math.random() * 900000).toString()

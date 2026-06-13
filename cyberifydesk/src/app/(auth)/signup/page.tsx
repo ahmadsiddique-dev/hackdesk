@@ -39,7 +39,7 @@ import {
   IconChevronRight,
   IconChevronLeft,
 } from "@tabler/icons-react"
-import { cn } from "@/lib/utils"
+import { cn, slugify } from "@/lib/utils"
 import { AuthLayout } from "@/components/elements/AuthLayout"
 
 export default function Page() {
@@ -47,6 +47,7 @@ export default function Page() {
   const [success, setSuccess] = React.useState(false)
   const router = useRouter()
   const setAuth = useUserStore((state) => state.setAuth)
+  const user = useUserStore((state) => state.user)
   const {
     loading: apiLoading,
     error: apiError,
@@ -131,12 +132,13 @@ export default function Page() {
 
   React.useEffect(() => {
     if (success) {
+      const orgSlug = user?.organization ? slugify(user.organization) : "default"
       const timer = setTimeout(() => {
-        router.push("/dashboard")
+        router.push(`/${orgSlug}/dashboard`)
       }, 2000)
       return () => clearTimeout(timer)
     }
-  }, [success, router])
+  }, [success, router, user?.organization])
 
   const onSubmit = async (data: SignUpFormValues) => {
     console.log("Submitting data:", data)

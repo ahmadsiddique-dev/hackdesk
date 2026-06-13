@@ -14,7 +14,7 @@ import {
 import Image from "next/image"
 import { SidebarMenuLinks } from "@/components/elements/SidebarMenuLinks"
 
-export default async function DashboardLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode
@@ -33,7 +33,7 @@ export default async function DashboardLayout({
               height={24}
               className="size-6 object-contain"
             />
-            <span className="font-extrabold text-sm tracking-tight text-foreground whitespace-nowrap transition-all duration-200 ease-linear opacity-100 max-w-[150px] group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 overflow-hidden">
+            <span className="font-extrabold text-sm tracking-tight text-foreground whitespace-nowrap transition-all duration-200 ease-linear opacity-100 max-w-37.5 group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 overflow-hidden">
               Cyberify Desk
             </span>
           </div>

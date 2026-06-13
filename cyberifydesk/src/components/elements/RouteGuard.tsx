@@ -7,16 +7,17 @@ import { useApi } from "@/hooks/apiClient"
 import { api } from "@/lib/api"
 import { BackgroundBlur } from "./BackgroundBlur"
 import { IconLoader2 } from "@tabler/icons-react"
+import { slugify } from "@/lib/utils"
 
 interface RouteGuardProps {
   children: React.ReactNode
 }
 
 const authRoutes = ["/signin", "/signup", "/forgot-password"]
-const protectedPrefixes = ["/dashboard"]
 
 export function RouteGuard({ children }: RouteGuardProps) {
   const accessToken = useUserStore((state) => state.accessToken)
+  const user = useUserStore((state) => state.user)
   const setAuth = useUserStore((state) => state.setAuth)
   const clearAuth = useUserStore((state) => state.clearAuth)
   const router = useRouter()
@@ -45,9 +46,10 @@ export function RouteGuard({ children }: RouteGuardProps) {
 
     const checkAuth = async () => {
       const isAuthRoute = authRoutes.includes(pathname)
-      const isProtectedRoute = protectedPrefixes.some((prefix) =>
-        pathname.startsWith(prefix)
-      )
+      const pathParts = pathname.split("/").filter(Boolean)
+      const isProtectedRoute =
+        pathParts.length >= 2 &&
+        ["dashboard", "tickets", "customers", "knowledge-base", "settings"].includes(pathParts[1])
 
       if (!isAuthRoute && !isProtectedRoute) {
         setVerifying(false)
@@ -67,7 +69,8 @@ export function RouteGuard({ children }: RouteGuardProps) {
 
       if (verifiedRef.current) {
         if (isAuthRoute) {
-          router.push("/dashboard")
+          const orgSlug = user?.organization ? slugify(user.organization) : "default"
+          router.push(`/${orgSlug}/dashboard`)
         } else {
           setVerifying(false)
         }
@@ -81,7 +84,8 @@ export function RouteGuard({ children }: RouteGuardProps) {
         verifiedRef.current = true
 
         if (isAuthRoute) {
-          router.push("/dashboard")
+          const orgSlug = res.user?.organization ? slugify(res.user.organization) : "default"
+          router.push(`/${orgSlug}/dashboard`)
         } else {
           setVerifying(false)
         }
@@ -97,16 +101,17 @@ export function RouteGuard({ children }: RouteGuardProps) {
 
     setVerifying(true)
     checkAuth()
-  }, [pathname, accessToken, hydrated, verifySession, clearAuth, setAuth, router])
+  }, [pathname, accessToken, hydrated, verifySession, clearAuth, setAuth, router, user?.organization])
 
   if (!hydrated) {
     return null
   }
 
   const isAuthRoute = authRoutes.includes(pathname)
-  const isProtectedRoute = protectedPrefixes.some((prefix) =>
-    pathname.startsWith(prefix)
-  )
+  const pathParts = pathname.split("/").filter(Boolean)
+  const isProtectedRoute =
+    pathParts.length >= 2 &&
+    ["dashboard", "tickets", "customers", "knowledge-base", "settings"].includes(pathParts[1])
 
   if (verifying && (isProtectedRoute || (isAuthRoute && accessToken))) {
     return (

@@ -63,6 +63,7 @@ export const POST = catchAsyncRoute(async (request: Request) => {
         email: user.email,
         fullName: user.fullName,
         role: user.role,
+        organization: user.organization,
       },
     })
   } catch (err: any) {
@@ -105,6 +106,7 @@ export const POST = catchAsyncRoute(async (request: Request) => {
             email: user.email,
             fullName: user.fullName,
             role: user.role,
+            organization: user.organization,
           },
         })
       } catch (refreshErr) {

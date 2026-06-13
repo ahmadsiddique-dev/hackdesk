@@ -6,6 +6,7 @@ type User = {
   email: string,
   fullName: string,
   role: string,
+  organization?: string | null,
 }
 
 interface UserState {
@@ -24,6 +25,7 @@ export const useUserStore = create<UserState>()(
         email: '',
         fullName: '',
         role: '',
+        organization: null,
       },
       setAuth: (accessToken, user) => set({ accessToken, user }),
       clearAuth: () =>
@@ -34,6 +36,7 @@ export const useUserStore = create<UserState>()(
             email: '',
             fullName: '',
             role: '',
+            organization: null,
           },
         }),
     }),
