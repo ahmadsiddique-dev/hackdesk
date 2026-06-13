@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Lora, Public_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { RouteGuard } from "@/components/elements/RouteGuard"
 import { cn } from "@/lib/utils"
 
 const publicSansHeading = Public_Sans({
@@ -42,7 +43,9 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            <RouteGuard>{children}</RouteGuard>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
