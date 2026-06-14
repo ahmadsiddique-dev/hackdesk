@@ -22,7 +22,10 @@ export default async function HelpCenterLayout({
 
       <HelpCenterHeader organizationName={orgName} />
 
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-12 sm:px-6 lg:px-8">
         {children}
+      </main>
+
       <footer className="border-t border-border/40 py-6 text-center text-muted-foreground text-2xs mt-auto">
         <span>Cyberify AI Support Desk built by Ahmad Siddique</span>
       </footer>

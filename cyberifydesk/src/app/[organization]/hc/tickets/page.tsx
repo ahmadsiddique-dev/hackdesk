@@ -13,8 +13,5 @@ export default async function HelpCenterTicketsPage({
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ")
 
-  return (
-    
-      <UserTicketsContent organizationName={orgName} />
-  )
+  return <UserTicketsContent organizationName={orgName} />
 }
