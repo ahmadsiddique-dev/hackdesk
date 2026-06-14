@@ -8,7 +8,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useParams, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { IconLogout, IconUser } from "@tabler/icons-react"
+import { IconLogout, IconUser, IconMenu2 } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
 import {
   Popover,
@@ -56,7 +56,10 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
     <header className="border-b border-border/40 bg-card/25 backdrop-blur-md sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
+          <Link
+            href={`/${orgSlug}/hc`}
+            className="flex items-center gap-2 hover:opacity-90 transition-opacity"
+          >
             <Image
               src="/logo.png"
               alt="Cyberify Desk Logo"
@@ -64,48 +67,86 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
               height={24}
               className="size-6 object-contain"
             />
-            <span className="font-extrabold text-sm tracking-tight text-foreground mr-4">
+            <span className="font-extrabold text-sm tracking-tight text-foreground mr-4 hidden min-[400px]:inline-block">
               Cyberify Desk
             </span>
-          </div>
+          </Link>
 
           {isLoggedIn && (
-            <nav className="hidden sm:flex items-center gap-4">
-              <Link
-                href={`/${orgSlug}/hc/new-ticket`}
-                className={cn(
-                  "text-xs font-semibold transition-colors",
-                  pathname === `/${orgSlug}/hc/new-ticket`
-                    ? "text-orange-500 font-bold"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                New Ticket
-              </Link>
-              <Link
-                href={`/${orgSlug}/hc/tickets`}
-                className={cn(
-                  "text-xs font-semibold transition-colors",
-                  pathname === `/${orgSlug}/hc/tickets`
-                    ? "text-orange-500 font-bold"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                My Tickets
-              </Link>
-            </nav>
+            <>
+              <nav className="hidden sm:flex items-center gap-4">
+                <Link
+                  href={`/${orgSlug}/hc/new-ticket`}
+                  className={cn(
+                    "text-xs font-semibold transition-colors",
+                    pathname === `/${orgSlug}/hc/new-ticket`
+                      ? "text-orange-500 font-bold"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  New Ticket
+                </Link>
+                <Link
+                  href={`/${orgSlug}/hc/tickets`}
+                  className={cn(
+                    "text-xs font-semibold transition-colors",
+                    pathname === `/${orgSlug}/hc/tickets`
+                      ? "text-orange-500 font-bold"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  My Tickets
+                </Link>
+              </nav>
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 rounded-full hover:bg-muted border border-border/20 text-muted-foreground hover:text-foreground sm:hidden"
+                  >
+                    <IconMenu2 className="size-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-40 p-1.5 flex flex-col rounded-xl border border-border/40 bg-card/95 backdrop-blur-md shadow-2xl animate-in fade-in slide-in-from-top-1 duration-200" align="start">
+                  <Link
+                    href={`/${orgSlug}/hc/new-ticket`}
+                    className={cn(
+                      "flex items-center text-2xs h-8 px-2.5 rounded-lg font-semibold transition-colors",
+                      pathname === `/${orgSlug}/hc/new-ticket`
+                        ? "bg-orange-500/10 text-orange-500 font-bold"
+                        : "text-foreground hover:bg-muted/60"
+                    )}
+                  >
+                    New Ticket
+                  </Link>
+                  <Link
+                    href={`/${orgSlug}/hc/tickets`}
+                    className={cn(
+                      "flex items-center text-2xs h-8 px-2.5 rounded-lg font-semibold transition-colors mt-0.5",
+                      pathname === `/${orgSlug}/hc/tickets`
+                        ? "bg-orange-500/10 text-orange-500 font-bold"
+                        : "text-foreground hover:bg-muted/60"
+                    )}
+                  >
+                    My Tickets
+                  </Link>
+                </PopoverContent>
+              </Popover>
+            </>
           )}
         </div>
 
         <div className="flex items-center gap-4">
           {isLoggedIn ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 rounded-full border border-border/40 bg-background/50 px-3 py-1 text-xs">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center rounded-full border border-border/40 bg-background/50 p-1.5 min-[480px]:gap-2 min-[480px]:px-3 min-[480px]:py-1 text-xs">
                 <IconUser className="size-3.5 text-muted-foreground" />
-                <span className="font-semibold text-foreground">
+                <span className="font-semibold text-foreground hidden min-[480px]:inline">
                   {customerUser.fullName}
                 </span>
-                <span className="text-muted-foreground text-3xs capitalize px-1.5 py-0.5 rounded-full bg-muted">
+                <span className="text-muted-foreground text-3xs capitalize px-1.5 py-0.5 rounded-full bg-muted hidden min-[580px]:inline">
                   Customer
                 </span>
               </div>
@@ -114,10 +155,10 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="rounded-full border-border/80 text-xs font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 h-8 px-4"
+                    className="rounded-full border-border/80 text-xs font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 h-8 w-8 p-0 min-[480px]:w-auto min-[480px]:px-4"
                   >
-                    <IconLogout className="mr-1.5 size-3.5" />
-                    <span>Logout</span>
+                    <IconLogout className="size-3.5 min-[480px]:mr-1.5" />
+                    <span className="hidden min-[480px]:inline">Logout</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-56 p-4 flex flex-col gap-3 rounded-xl border border-border/40 bg-card/90 backdrop-blur-md shadow-2xl animate-in fade-in duration-200" align="end">

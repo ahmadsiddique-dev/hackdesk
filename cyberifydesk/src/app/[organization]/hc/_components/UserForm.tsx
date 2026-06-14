@@ -25,6 +25,7 @@ import { ticketSchema, type TicketFormValues } from "@/schema/ticket.schema"
 import { useCustomerStore } from "@/store/customer"
 import { useApi } from "@/hooks/apiClient"
 import axios from "axios"
+import Link from "next/link"
 
 type TicketPayloadType = {
   customerId: string
@@ -87,15 +88,28 @@ export function UserForm() {
           Your support request has been received. We will get back to you
           shortly.
         </p>
-        <Button
-          onClick={() => {
-            reset()
-          }}
-          className="mt-6 rounded-full border border-border/80 bg-background px-6 py-2 text-xs font-semibold hover:bg-muted"
-          variant="outline"
-        >
-          Submit Another Ticket
-        </Button>
+        <div className="flex gap-3">
+          <Link href={`/${organization}/hc/tickets`}>
+            <Button
+              className="mt-6 rounded-full border border-border/80 bg-background px-6 py-2 text-xs font-semibold hover:bg-muted"
+              variant="secondary"
+            >
+              Manage Ticket
+            </Button>
+          </Link>
+          <Link href={`/${organization}/hc/new-ticket`}>
+          
+          </Link>
+          <Button
+            onClick={() => {
+              reset()
+            }}
+            className="mt-6 rounded-full border border-border/80 bg-background px-6 py-2 text-xs font-semibold hover:bg-muted"
+            variant="outline"
+          >
+            Submit Another
+          </Button>
+        </div>
       </div>
     )
   }

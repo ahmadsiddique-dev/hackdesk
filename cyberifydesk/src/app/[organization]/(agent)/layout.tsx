@@ -68,6 +68,7 @@ export default async function MainLayout({
       </Sidebar>
 
       <SidebarInset>{children}</SidebarInset>
+      
     </SidebarProvider>
   )
 }

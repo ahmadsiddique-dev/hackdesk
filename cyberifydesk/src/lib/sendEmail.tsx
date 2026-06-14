@@ -44,7 +44,7 @@ const OtpEmail = ({ name, otp }: OtpEmailProps) => (
 
 export async function sendOtpEmail(email: string, name: string, otp: string) {
   const { data, error } = await resend.emails.send({
-    from: "Cyberify Desk <onboarding@resend.dev>",
+    from: "Cyberify Desk <me@ahmadsiddique.dev>",
     to: [email],
     subject: "Verify your Cyberify Desk Account",
     react: <OtpEmail name={name} otp={otp} />,

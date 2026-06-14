@@ -12,12 +12,20 @@ import {
   IconCircleCheck,
   IconAlertCircle,
 } from "@tabler/icons-react"
+import fetchStats from "./_lib/fetch_stats"
 
 import { BackgroundBlur } from "@/components/elements/BackgroundBlur"
+import Footer from "../_components/Footer"
 
-export default async function Page() {
+export type Props = {
+  params: Promise<{ organization: string }>
+}
+
+export default async function Page({params}: Props) {
   const user = await checkAgentAuth()
+  const { organization } = await params
 
+  const stats = await fetchStats(organization)
   return (
     <div className="relative flex min-h-screen flex-col bg-background font-sans text-foreground transition-colors duration-300 selection:bg-primary/30">
       <BackgroundBlur />
@@ -36,9 +44,9 @@ export default async function Page() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-xl sm:text-2xl font-bold text-foreground">154</p>
+              <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.length}</p>
               <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-1 truncate">
-                +12.5% from last week
+                All tickets ever created
               </p>
             </CardContent>
           </Card>
@@ -53,9 +61,9 @@ export default async function Page() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-xl sm:text-2xl font-bold text-foreground">24</p>
+              <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.filter((t: any) => t.status === "open").length}</p>
               <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-1 truncate">
-                8 assigned to you
+                All Open tickets
               </p>
             </CardContent>
           </Card>
@@ -70,9 +78,9 @@ export default async function Page() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-xl sm:text-2xl font-bold text-foreground">118</p>
+              <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.filter((t: any) => t.status === "close").length}</p>
               <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-1 truncate">
-                98.2% resolution rate
+                Agent issues resolved
               </p>
             </CardContent>
           </Card>
@@ -87,18 +95,16 @@ export default async function Page() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-xl sm:text-2xl font-bold text-foreground">12</p>
+              <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.filter((t: any) => t.status === "pending").length}</p>
               <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-1 truncate">
-                Awaiting customer reply
+                Still needs attention
               </p>
             </CardContent>
           </Card>
         </div>
       </main>
 
-      <footer className="border-t border-border/40 mt-auto py-6 text-center text-muted-foreground text-2xs">
-        <span>Cyberify AI Support Desk built by Ahmad Siddique</span>
-      </footer>
+      <Footer />
     </div>
   )
 }

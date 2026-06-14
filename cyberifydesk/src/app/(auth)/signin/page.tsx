@@ -97,12 +97,6 @@ export default function Page() {
     }
   }, [loginSuccess, router, user?.organization])
 
-  const handleGenerateOtp = () => {
-    const code = Math.floor(100000 + Math.random() * 900000).toString()
-    setGeneratedOtp(code)
-    setValue("otp", code, { shouldValidate: true })
-  }
-
   const handleNextStep = async (e: React.MouseEvent) => {
     e.preventDefault()
     if (currentStep === 1) {
@@ -234,13 +228,6 @@ export default function Page() {
                       <FieldLabel htmlFor="otp">
                         6-Digit Verification Code (OTP)
                       </FieldLabel>
-                      <button
-                        type="button"
-                        onClick={handleGenerateOtp}
-                        className="text-2xs font-semibold text-orange-500 hover:underline"
-                      >
-                        Generate OTP
-                      </button>
                     </div>
                     <Controller
                       control={control}
@@ -266,25 +253,8 @@ export default function Page() {
                         </div>
                       )}
                     />
-                    <FieldDescription>
-                      Enter the verification code. You can click Generate OTP for a
-                      mock code.
-                    </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
                   </Field>
-
-                  {generatedOtp && (
-                    <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-xs text-emerald-500">
-                      <IconCircleCheck className="size-4 shrink-0" />
-                      <span>
-                        Mock OTP generated:{" "}
-                        <strong className="font-mono tracking-widest">
-                          {generatedOtp}
-                        </strong>{" "}
-                        (Auto-filled)
-                      </span>
-                    </div>
-                  )}
                 </div>
               )}
             </FieldGroup>

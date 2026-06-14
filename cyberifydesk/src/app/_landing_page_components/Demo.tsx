@@ -192,7 +192,7 @@ export function Demo() {
                     {selectedTicket.timeline.map((item, idx) => (
                       <div key={idx} className="relative flex gap-4">
                         {idx !== selectedTicket.timeline.length - 1 && (
-                          <div className="absolute top-5 bottom-[-16px] left-2.5 w-px bg-border" />
+                          <div className="absolute top-5 -bottom-4 left-2.5 w-px bg-border" />
                         )}
                         <div
                           className={`flex size-5 shrink-0 items-center justify-center rounded-full ${

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCustomerStore } from "@/store/customer"
@@ -250,7 +251,17 @@ export function UserAuth({ organizationName }: UserAuthProps) {
             </Field>
 
             <Field data-invalid={!!errors.password}>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <div className="flex items-center justify-between">
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                {/* {tab === "signin" && (
+                  <Link
+                    href="/forgot-password"
+                    className="text-2 font-semibold text-orange-500 hover:text-orange-400 transition-colors"
+                  >
+                    Forgot password?
+                  </Link>
+                )} */}
+              </div>
               <InputGroup>
                 <InputGroupAddon align="inline-start">
                   <IconLock className="size-3.5" />

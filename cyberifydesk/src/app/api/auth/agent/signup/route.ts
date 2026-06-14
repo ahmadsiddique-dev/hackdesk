@@ -26,11 +26,16 @@ export const POST = catchAsyncRoute(async (request: Request) => {
   }
   const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString()
 
+  const modifiedOrganizationName = organizationName
+    .split("-")
+    .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ")
+
   const user = new User({
     fullName: name,
     email: email,
     password: password,
-    organization: organizationName,
+    organization: modifiedOrganizationName,
     role: role || "agent",
     otp: generatedOtp,
   })

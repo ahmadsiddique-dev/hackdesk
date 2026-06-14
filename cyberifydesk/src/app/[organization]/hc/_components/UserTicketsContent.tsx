@@ -4,6 +4,7 @@ import * as React from "react"
 import { useCustomerStore } from "@/store/customer"
 import { UserAuth } from "./UserAuth"
 import { useParams, useRouter } from "next/navigation"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { formatDate } from "@/lib/formatDate"
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Popover,
   PopoverContent,
@@ -93,7 +95,7 @@ export function UserTicketsContent({
           </p>
         </div>
         <Button
-          onClick={() => router.push(`/${orgSlug}/hc`)}
+          onClick={() => router.push(`/${orgSlug}/hc/new-ticket`)}
           className="h-9 rounded-full bg-linear-to-r from-orange-600 to-amber-500 px-4 text-xs font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
         >
           <IconPlus className="mr-1.5 size-4" />
@@ -101,7 +103,7 @@ export function UserTicketsContent({
         </Button>
       </div>
 
-      <div className="overflow-x-auto">
+      <ScrollArea className="w-full" hideScrollbar>
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/40 hover:bg-transparent">
@@ -126,8 +128,19 @@ export function UserTicketsContent({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {ticketData?.length === 0 ? (
-              <TableRow>
+            {ticketLoading ? (
+              <TableRow className="hover:bg-transparent border-none">
+                <TableCell
+                  colSpan={6}
+                  className="py-16 text-center text-xs text-muted-foreground"
+                >
+                  <div className="flex justify-center items-center">
+                    <div className="size-6 animate-spin rounded-full border-2 border-orange-500 border-t-transparent" />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : ticketData?.length === 0 ? (
+              <TableRow className="hover:bg-transparent">
                 <TableCell
                   colSpan={6}
                   className="py-10 text-center text-xs text-muted-foreground"
@@ -139,7 +152,8 @@ export function UserTicketsContent({
               ticketData?.map((ticket: any) => (
                 <TableRow
                   key={ticket._id}
-                  className="border-b border-border/20 transition-colors hover:bg-muted/10"
+                  onClick={() => router.push(`/${orgSlug}/hc/tickets/${ticket._id}`)}
+                  className="border-b border-border/20 transition-all duration-300 hover:bg-orange-500/3 cursor-pointer active:scale-[0.999]"
                 >
                   <TableCell className="font-mono align-top text-xs font-semibold text-orange-500">
                     #{ticket._id}
@@ -191,7 +205,7 @@ export function UserTicketsContent({
                   <TableCell className="text-xs text-muted-foreground">
                     {formatDate(ticket.createdAt)}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -228,10 +242,10 @@ export function UserTicketsContent({
             )}
           </TableBody>
         </Table>
-      </div>
+      </ScrollArea>
 
       <Sheet open={!!editingTicket} onOpenChange={(open) => { if (!open) setEditingTicket(null) }}>
-        <SheetContent side="right" className="w-[400px] sm:max-w-md p-6 bg-card border-l border-border/40 text-foreground flex flex-col gap-6">
+        <SheetContent side="right" className="w-100 sm:max-w-md p-6 bg-card border-l border-border/40 text-foreground flex flex-col gap-6">
           <SheetHeader className="p-0 flex flex-col gap-1.5">
             <SheetTitle className="text-lg font-bold text-foreground">Edit Ticket</SheetTitle>
             <SheetDescription className="text-xs text-muted-foreground">
