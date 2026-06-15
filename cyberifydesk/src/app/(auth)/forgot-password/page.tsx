@@ -340,7 +340,7 @@ export default function Page() {
                       )}
                     />
                     <FieldDescription>
-                      Enter the code sent to your email.
+                      Enter the code sent to your email (check your spam/junk folder if not found).
                     </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
                   </Field>

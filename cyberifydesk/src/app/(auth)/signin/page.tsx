@@ -16,6 +16,7 @@ import {
   FieldGroup,
   FieldLabel,
   FieldError,
+  FieldDescription,
 } from "@/components/ui/field"
 import {
   InputGroup,
@@ -247,6 +248,9 @@ export default function Page() {
                         </div>
                       )}
                     />
+                    <FieldDescription>
+                      Enter the code sent to your email (check your spam/junk folder if not found).
+                    </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
                   </Field>
                 </div>

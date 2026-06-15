@@ -8,7 +8,7 @@ import { useCustomerStore } from "@/store/customer"
 import { useApi } from "@/hooks/apiClient"
 import { api } from "@/lib/api"
 import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldError } from "@/components/ui/field"
+import { Field, FieldLabel, FieldError, FieldDescription } from "@/components/ui/field"
 import {
   InputGroup,
   InputGroupInput,
@@ -349,6 +349,9 @@ export function UserAuth({ organizationName }: UserAuthProps) {
               />
             </div>
             <FieldError>{errors.otp?.message}</FieldError>
+            <FieldDescription className="text-center text-3xs">
+              Enter the code sent to your email (check your spam/junk folder if not found).
+            </FieldDescription>
           </Field>
 
 

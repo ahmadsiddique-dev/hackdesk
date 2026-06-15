@@ -35,7 +35,7 @@ const OtpEmail = ({ name, otp }: OtpEmailProps) => (
           </span>
         </Section>
         <Text style={{ fontSize: "14px", color: "#888", marginTop: "32px" }}>
-          If you did not request this code, you can safely ignore this email.
+          If you did not request this code, you can safely ignore this email. Note: If you don't see this email in your inbox, please check your spam or junk folder.
         </Text>
       </Container>
     </Body>
