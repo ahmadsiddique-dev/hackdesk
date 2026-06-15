@@ -53,6 +53,13 @@ const worker = new Worker(
         await vectorStore.addDocuments(batch);
       }
     }
+    try {
+      if (fs.existsSync(data.path)) {
+        fs.unlinkSync(data.path);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
   },
   {
     concurrency: 100,
@@ -64,9 +71,9 @@ const worker = new Worker(
 );
 
 worker.on("completed", (job) => {
-  console.log(`[BullMQ System] SUCCESS: Job #${job.id} has finished processing and indexing successfully`);
+  console.log(`File processed successfully`);
 });
 
 worker.on("failed", (job, err) => {
-  console.error(`[BullMQ System] FAILURE: Job #${job?.id} failed during execution:`, err.message || err);
+  console.log(`File processing failed. Try again`);
 });
