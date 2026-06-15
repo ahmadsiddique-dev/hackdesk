@@ -53,8 +53,11 @@ export function ChatWidget() {
     setIsTyping(true)
 
     try {
-      const res = await axios.get("http://localhost:7000/chat", {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_DESKRAG_URI}/chat`, {
         params: { userQuery: userQueryText },
+        headers: {
+          "x-api-key": process.env.NEXT_PUBLIC_DESKRAG_API_KEY || "",
+        },
       })
       const replyText =
         res.data.result.text || "Sorry, I couldn't generate a response."
