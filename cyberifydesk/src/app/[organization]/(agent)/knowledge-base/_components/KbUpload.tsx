@@ -58,8 +58,8 @@ export function KbUpload() {
       return
     }
 
-    if (selectedFile.size > 150 * 1024) {
-      setLocalError("File size exceeds the 150KB limit.")
+    if (selectedFile.size > 250 * 1024) {
+      setLocalError("File size exceeds the 250KB limit.")
       setFile(null)                             
       return
     }

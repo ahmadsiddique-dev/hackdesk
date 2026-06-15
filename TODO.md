@@ -9,3 +9,5 @@
 [ ] Fix scroll behaviour in chat window that takes us down chat every time
 [ ] HC Signin filling otp automatically bug
 [ ] Wrong password Error not showing in signup for agent
+[ ] Make sure every components rag both access it's own company data
+[ ] Fix side bar urls in agent section

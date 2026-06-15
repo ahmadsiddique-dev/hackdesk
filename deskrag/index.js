@@ -5,17 +5,12 @@ import multer from "multer";
 import { Queue } from "bullmq";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { getEmbeddingsClient } from "./src/embeddings.js";
-import { GoogleGenAI } from "@google/genai";
 
 const queue = new Queue("data-upload-queue", {
   connection: {
     host: "localhost",
     port: 6379,
   },
-});
-
-const ai = new GoogleGenAI({
-  apikey: process.env.GEMINI_API_KEY
 });
 
 const storage = multer.diskStorage({
@@ -30,7 +25,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 150 * 1024 }
+  limits: { fileSize: 250 * 1024 },
 });
 
 const app = express();
@@ -41,14 +36,18 @@ app.get("/", (req, res) => {
   res.send(`Server is up and running`);
 });
 
-app.post("/upload/file", upload.single("file"), async function (req, res, next) {
-  const job = await queue.add("file-ready", {
-    filename: req.file.filename,
-    destination: req.file.destination,
-    path: req.file.path,
-  });
-  res.json({ message: "File uploaded successfully!", jobId: job.id });
-});
+app.post(
+  "/upload/file",
+  upload.single("file"),
+  async function (req, res, next) {
+    const job = await queue.add("file-ready", {
+      filename: req.file.filename,
+      destination: req.file.destination,
+      path: req.file.path,
+    });
+    res.json({ message: "File uploaded successfully!", jobId: job.id });
+  },
+);
 
 app.get("/upload/status/:jobId", async (req, res) => {
   const { jobId } = req.params;
@@ -75,12 +74,39 @@ app.get("/chat", async (req, res) => {
 
   const similaritySearchResults = await vectorStore.similaritySearch(userQuery);
 
-  const result = await ai.models.generateContent({
-    model: "gemini-3.5-flash",
-    contents: similaritySearchResults,
+  const context = similaritySearchResults.map((doc) => doc.pageContent).join("\n\n");
+  const prompt = `Use the following context to answer the user query:
+
+Context:
+${context}
+
+User Query: ${userQuery}`;
+
+  const response = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "google/gemini-2.5-flash",
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    }),
   });
 
-  res.send({ result });
+  if (!response.ok) {
+    return res.status(response.status).send({ error: `Hack Club AI chat error: ${response.status} ${response.statusText}` });
+  }
+
+  const json = await response.json();
+  const replyText = json.choices[0].message.content;
+  console.log("Reply text: ", replyText)
+  res.send({ result: { text: replyText } });
 });
 
 app.listen(PORT, () => {
