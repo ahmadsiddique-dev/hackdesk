@@ -53,7 +53,9 @@ export default function Page() {
   } = useApi(
     React.useCallback(
       (payload: { email: string }) =>
-        axios.post("/api/auth/agent/forgot-password/new", payload).then((res) => res.data),
+        axios
+          .post("/api/auth/agent/forgot-password/new", payload)
+          .then((res) => res.data),
       []
     )
   )
@@ -65,7 +67,9 @@ export default function Page() {
   } = useApi(
     React.useCallback(
       (payload: { email: string; otp: string }) =>
-        axios.post("/api/auth/agent/forgot-password/verify", payload).then((res) => res.data),
+        axios
+          .post("/api/auth/agent/forgot-password/verify", payload)
+          .then((res) => res.data),
       []
     )
   )
@@ -77,7 +81,9 @@ export default function Page() {
   } = useApi(
     React.useCallback(
       (payload: { email: string; password: string }) =>
-        axios.patch("/api/auth/agent/forgot-password/new", payload).then((res) => res.data),
+        axios
+          .patch("/api/auth/agent/forgot-password/new", payload)
+          .then((res) => res.data),
       []
     )
   )
@@ -145,7 +151,8 @@ export default function Page() {
   }
 
   const activeError = requestOtpError || verifyOtpError || resetPasswordError
-  const isSubmitting = requestOtpLoading || verifyOtpLoading || resetPasswordLoading
+  const isSubmitting =
+    requestOtpLoading || verifyOtpLoading || resetPasswordLoading
 
   return (
     <AuthLayout backLink="/signin" backText="Back to Sign In">
@@ -340,7 +347,8 @@ export default function Page() {
                       )}
                     />
                     <FieldDescription>
-                      Enter the code sent to your email (check your spam/junk folder if not found).
+                      Enter the code sent to your email (check your spam/junk
+                      folder if not found).
                     </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
                   </Field>

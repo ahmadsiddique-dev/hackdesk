@@ -15,6 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { ThemeSwitch } from "@/components/elements/ThemeSwitch"
 
 interface HelpCenterHeaderProps {
   organizationName: string
@@ -139,7 +140,8 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
         </div>
 
         <div className="flex items-center gap-4">
-          {isLoggedIn ? (
+          <ThemeSwitch />
+          {isLoggedIn && (
             <div className="flex items-center gap-3">
               <div className="flex items-center rounded-full border border-border/40 bg-background/50 p-1.5 min-[480px]:gap-2 min-[480px]:px-3 min-[480px]:py-1 text-xs">
                 <IconUser className="size-3.5 text-muted-foreground" />
@@ -189,13 +191,6 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                 </PopoverContent>
               </Popover>
             </div>
-          ) : (
-            <Link
-              href="/signin"
-              className="text-xs font-semibold text-muted-foreground hover:text-orange-500 transition-colors"
-            >
-              Agent Sign In
-            </Link>
           )}
         </div>
       </div>

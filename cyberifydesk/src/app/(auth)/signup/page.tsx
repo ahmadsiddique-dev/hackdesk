@@ -59,8 +59,7 @@ export default function Page() {
           role: string
           otp?: string
         }
-      ) =>
-        api.post("/api/auth/agent/signup", payload).then((res) => res.data),
+      ) => api.post("/api/auth/agent/signup", payload).then((res) => res.data),
       []
     )
   )
@@ -132,7 +131,9 @@ export default function Page() {
 
   React.useEffect(() => {
     if (success) {
-      const orgSlug = user?.organization ? slugify(user.organization) : "default"
+      const orgSlug = user?.organization
+        ? slugify(user.organization)
+        : "default"
       const timer = setTimeout(() => {
         router.push(`/${orgSlug}/dashboard`)
       }, 2000)
@@ -144,7 +145,7 @@ export default function Page() {
     console.log("Submitting data:", data)
     const { email, otp } = data
     const res = await verifyExecute({ email, otp })
-    
+
     if (res && res.success) {
       setAuth(res.accessToken, res.user)
       setSuccess(true)
@@ -377,7 +378,8 @@ export default function Page() {
                       )}
                     />
                     <FieldDescription>
-                      Enter the code sent to your email (check your spam/junk folder if not found).
+                      Enter the code sent to your email (check your spam/junk
+                      folder if not found).
                     </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
                   </Field>

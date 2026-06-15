@@ -87,7 +87,9 @@ export default function Page() {
 
   React.useEffect(() => {
     if (loginSuccess) {
-      const orgSlug = user?.organization ? slugify(user.organization) : "default"
+      const orgSlug = user?.organization
+        ? slugify(user.organization)
+        : "default"
       router.push(`/${orgSlug}/dashboard`)
     }
   }, [loginSuccess, router, user?.organization])
@@ -249,7 +251,8 @@ export default function Page() {
                       )}
                     />
                     <FieldDescription>
-                      Enter the code sent to your email (check your spam/junk folder if not found).
+                      Enter the code sent to your email (check your spam/junk
+                      folder if not found).
                     </FieldDescription>
                     <FieldError>{errors.otp?.message}</FieldError>
                   </Field>

@@ -8,7 +8,12 @@ import { useCustomerStore } from "@/store/customer"
 import { useApi } from "@/hooks/apiClient"
 import { api } from "@/lib/api"
 import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldError, FieldDescription } from "@/components/ui/field"
+import {
+  Field,
+  FieldLabel,
+  FieldError,
+  FieldDescription,
+} from "@/components/ui/field"
 import {
   InputGroup,
   InputGroupInput,
@@ -19,12 +24,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-import {
-  IconMail,
-  IconLock,
-  IconUser,
-  IconLoader2,
-} from "@tabler/icons-react"
+import { IconMail, IconLock, IconUser, IconLoader2 } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
 import { customerSignInSchema } from "@/schema/customer-signin.schema"
 import { customerSignUpSchema } from "@/schema/customer-signup.schema"
@@ -77,9 +77,11 @@ export function UserAuth({ organizationName }: UserAuthProps) {
   const { loading: signinLoading, execute: executeSignIn } = useApi(
     React.useCallback(
       (payload: any) =>
-        api.post("/api/auth/agent/signin", payload, {
-          headers: { "X-Role": "customer" },
-        }).then((res) => res.data),
+        api
+          .post("/api/auth/agent/signin", payload, {
+            headers: { "X-Role": "customer" },
+          })
+          .then((res) => res.data),
       []
     )
   )
@@ -87,9 +89,11 @@ export function UserAuth({ organizationName }: UserAuthProps) {
   const { loading: signupLoading, execute: executeSignUp } = useApi(
     React.useCallback(
       (payload: any) =>
-        api.post("/api/auth/agent/signup", payload, {
-          headers: { "X-Role": "customer" },
-        }).then((res) => res.data),
+        api
+          .post("/api/auth/agent/signup", payload, {
+            headers: { "X-Role": "customer" },
+          })
+          .then((res) => res.data),
       []
     )
   )
@@ -97,9 +101,11 @@ export function UserAuth({ organizationName }: UserAuthProps) {
   const { loading: verifyLoading, execute: executeVerify } = useApi(
     React.useCallback(
       (url: string, payload: any) =>
-        api.patch(url, payload, {
-          headers: { "X-Role": "customer" },
-        }).then((res) => res.data),
+        api
+          .patch(url, payload, {
+            headers: { "X-Role": "customer" },
+          })
+          .then((res) => res.data),
       []
     )
   )
@@ -125,9 +131,6 @@ export function UserAuth({ organizationName }: UserAuthProps) {
           password: values.password,
         })
         if (res && res.success) {
-          if (res.otp) {
-            setValue("otp", res.otp, { shouldValidate: true })
-          }
           setStep(2)
         } else {
           setErrorMsg(res?.message || "Invalid credentials")
@@ -153,7 +156,8 @@ export function UserAuth({ organizationName }: UserAuthProps) {
 
   const onSubmit = async (data: CustomerAuthFormValues) => {
     setErrorMsg("")
-    const url = tab === "signin" ? "/api/auth/agent/signin" : "/api/auth/agent/signup"
+    const url =
+      tab === "signin" ? "/api/auth/agent/signin" : "/api/auth/agent/signup"
     try {
       const res = await executeVerify(url, {
         email: data.email,
@@ -170,12 +174,12 @@ export function UserAuth({ organizationName }: UserAuthProps) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md border border-border/40 bg-card/30 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in duration-300">
+    <div className="mx-auto w-full max-w-md animate-in rounded-2xl border border-border/40 bg-card/30 p-6 shadow-2xl backdrop-blur-md duration-300 fade-in zoom-in sm:p-8">
       <div className="mb-6 text-center">
         <h2 className="text-xl font-extrabold tracking-tight text-foreground">
           {step === 1 ? "Customer Authentication" : "Verify Email"}
         </h2>
-        <p className="text-xs text-muted-foreground mt-1">
+        <p className="mt-1 text-xs text-muted-foreground">
           {step === 1
             ? `Connect with ${organizationName} support portal`
             : "Enter the verification code sent to your email"}
@@ -184,13 +188,13 @@ export function UserAuth({ organizationName }: UserAuthProps) {
 
       {step === 1 ? (
         <div className="flex flex-col gap-6">
-          <div className="flex border-b border-border/40 p-0.5 bg-muted/30 rounded-lg">
+          <div className="flex rounded-lg border-b border-border/40 bg-muted/30 p-0.5">
             <button
               onClick={() => {
                 setTab("signin")
               }}
               className={cn(
-                "flex-1 py-1.5 text-xs font-semibold rounded-md transition-all",
+                "flex-1 rounded-md py-1.5 text-xs font-semibold transition-all",
                 tab === "signin"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -203,7 +207,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
                 setTab("signup")
               }}
               className={cn(
-                "flex-1 py-1.5 text-xs font-semibold rounded-md transition-all",
+                "flex-1 rounded-md py-1.5 text-xs font-semibold transition-all",
                 tab === "signup"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -225,7 +229,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
                     id="fullname"
                     type="text"
                     placeholder="John Doe"
-                    className="text-xs py-2 h-9"
+                    className="h-9 py-2 text-xs"
                     {...register("name")}
                   />
                 </InputGroup>
@@ -243,7 +247,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
                   id="email"
                   type="email"
                   placeholder="name@company.com"
-                  className="text-xs py-2 h-9"
+                  className="h-9 py-2 text-xs"
                   {...register("email")}
                 />
               </InputGroup>
@@ -270,7 +274,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
                   id="password"
                   type="password"
                   placeholder="••••••••"
-                  className="text-xs py-2 h-9"
+                  className="h-9 py-2 text-xs"
                   {...register("password")}
                 />
               </InputGroup>
@@ -279,7 +283,9 @@ export function UserAuth({ organizationName }: UserAuthProps) {
 
             {tab === "signup" && (
               <Field data-invalid={!!errors.confirmPassword}>
-                <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+                <FieldLabel htmlFor="confirmPassword">
+                  Confirm Password
+                </FieldLabel>
                 <InputGroup>
                   <InputGroupAddon align="inline-start">
                     <IconLock className="size-3.5" />
@@ -288,7 +294,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
                     id="confirmPassword"
                     type="password"
                     placeholder="••••••••"
-                    className="text-xs py-2 h-9"
+                    className="h-9 py-2 text-xs"
                     {...register("confirmPassword")}
                   />
                 </InputGroup>
@@ -297,7 +303,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
             )}
 
             {errorMsg && (
-              <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-2.5 text-2xs text-destructive">
+              <div className="text-2xs rounded-xl border border-destructive/20 bg-destructive/5 p-2.5 text-destructive">
                 {errorMsg}
               </div>
             )}
@@ -306,11 +312,11 @@ export function UserAuth({ organizationName }: UserAuthProps) {
               type="button"
               onClick={handleSendOtp}
               disabled={signinLoading || signupLoading}
-              className="mt-2 rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400 text-xs h-9"
+              className="mt-2 h-9 rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 text-xs font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
             >
               {signinLoading || signupLoading ? (
                 <>
-                  <IconLoader2 className="size-4 animate-spin mr-1.5" />
+                  <IconLoader2 className="mr-1.5 size-4 animate-spin" />
                   <span>Sending OTP...</span>
                 </>
               ) : (
@@ -349,19 +355,19 @@ export function UserAuth({ organizationName }: UserAuthProps) {
               />
             </div>
             <FieldError>{errors.otp?.message}</FieldError>
-            <FieldDescription className="text-center text-3xs">
-              Enter the code sent to your email (check your spam/junk folder if not found).
+            <FieldDescription className="text-3xs text-center">
+              Enter the code sent to your email (check your spam/junk folder if
+              not found).
             </FieldDescription>
           </Field>
 
-
           {errorMsg && (
-            <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-2.5 text-2xs text-destructive">
+            <div className="text-2xs rounded-xl border border-destructive/20 bg-destructive/5 p-2.5 text-destructive">
               {errorMsg}
             </div>
           )}
 
-          <div className="flex gap-3 mt-2">
+          <div className="mt-2 flex gap-3">
             <Button
               type="button"
               variant="outline"
@@ -369,18 +375,18 @@ export function UserAuth({ organizationName }: UserAuthProps) {
                 setStep(1)
                 setErrorMsg("")
               }}
-              className="rounded-full border-border/80 px-4 font-semibold text-xs h-9"
+              className="h-9 rounded-full border-border/80 px-4 text-xs font-semibold"
             >
               Back
             </Button>
             <Button
               type="submit"
               disabled={verifyLoading}
-              className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400 text-xs h-9"
+              className="h-9 grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-4 text-xs font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
             >
               {verifyLoading ? (
                 <>
-                  <IconLoader2 className="size-4 animate-spin mr-1.5" />
+                  <IconLoader2 className="mr-1.5 size-4 animate-spin" />
                   <span>Verifying...</span>
                 </>
               ) : (
@@ -393,4 +399,3 @@ export function UserAuth({ organizationName }: UserAuthProps) {
     </div>
   )
 }
-

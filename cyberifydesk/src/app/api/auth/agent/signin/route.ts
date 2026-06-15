@@ -96,7 +96,8 @@ export async function PATCH(request: Request) {
   await user.save()
 
   const cookieStore = await cookies()
-  const cookieName = user.role === "agent" ? "refreshToken" : "customerRefreshToken"
+  const cookieName =
+    user.role === "agent" ? "refreshToken" : "customerRefreshToken"
   cookieStore.set(cookieName, refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
