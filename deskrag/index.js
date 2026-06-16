@@ -33,7 +33,7 @@ const PORT = process.env.PORT || 7000;
 app.use(
   cors({
     origin: process.env.ALLOWED_ORIGIN || "*",
-  })
+  }),
 );
 
 const apiAuth = (req, res, next) => {
@@ -94,7 +94,9 @@ app.get("/chat", apiAuth, async (req, res) => {
 
   const similaritySearchResults = await vectorStore.similaritySearch(userQuery);
 
-  const context = similaritySearchResults.map((doc) => doc.pageContent).join("\n\n");
+  const context = similaritySearchResults
+    .map((doc) => doc.pageContent)
+    .join("\n\n");
   const prompt = `Use the following context to answer the user query:
 
 Context:
@@ -102,31 +104,38 @@ ${context}
 
 User Query: ${userQuery}`;
 
-  const response = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+  const response = await fetch(
+    "https://ai.hackclub.com/proxy/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "google/gemini-3-flash-preview",
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        max_tokens: 1000,
+      }),
     },
-    body: JSON.stringify({
-      model: "google/gemini-3-flash-preview:free",
-      messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      max_tokens: 1000,
-    }),
-  });
+  );
 
   if (!response.ok) {
-    return res.status(response.status).send({ error: `Hack Club AI chat error: ${response.status} ${response.statusText}` });
+    return res
+      .status(response.status)
+      .send({
+        error: `Hack Club AI chat error: ${response.status} ${response.statusText}`,
+      });
   }
 
   const json = await response.json();
   const replyText = json.choices[0].message.content;
-  console.log("Reply text: ", replyText)
+  console.log("Reply text: ", replyText);
   res.send({ result: { text: replyText } });
 });
 
