@@ -5,7 +5,7 @@ export function CTA() {
   return (
     <section className="py-20 md:py-28">
       <div className="relative mx-auto flex max-w-5xl flex-col items-center overflow-hidden rounded-3xl border border-border/40 bg-card/30 px-8 py-16 text-center shadow-2xl">
-        <div className="pointer-events-none absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-600/10 blur-[100px]" />
+        <div className="pointer-events-none absolute top-1/2 left-1/2 h-100 w-100 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-600/10 blur-[100px]" />
 
         <h2 className="relative mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
           Ready to scale your support operations?

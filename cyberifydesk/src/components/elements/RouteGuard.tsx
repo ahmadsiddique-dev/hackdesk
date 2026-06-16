@@ -67,7 +67,7 @@ export function RouteGuard({ children }: RouteGuardProps) {
       const pathParts = pathname.split("/").filter(Boolean)
       const isProtectedRoute =
         pathParts.length >= 2 &&
-        ["dashboard", "tickets", "customers", "knowledge-base", "settings"].includes(pathParts[1])
+        ["dashboard", "tickets", "knowledge-base"].includes(pathParts[1])
       const isCustomerRoute = pathParts.length >= 2 && pathParts[1] === "hc"
       const isAuthRoute = authRoutes.includes(pathname)
 
@@ -168,7 +168,7 @@ export function RouteGuard({ children }: RouteGuardProps) {
   const pathParts = pathname.split("/").filter(Boolean)
   const isProtectedRoute =
     pathParts.length >= 2 &&
-    ["dashboard", "tickets", "customers", "knowledge-base", "settings"].includes(pathParts[1])
+    ["dashboard", "tickets", "knowledge-base"].includes(pathParts[1])
 
   if (verifying && (isProtectedRoute || (isAuthRoute && accessToken))) {
     return (

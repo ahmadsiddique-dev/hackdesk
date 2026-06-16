@@ -6,9 +6,7 @@ import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 import {
   IconLayoutDashboard,
   IconTicket,
-  IconUsers,
   IconBook,
-  IconSettings,
 } from "@tabler/icons-react"
 
 export function SidebarMenuLinks() {
@@ -30,22 +28,10 @@ export function SidebarMenuLinks() {
       icon: IconTicket,
     },
     {
-      href: "/customers",
-      label: "Customers",
-      tooltip: "Customers",
-      icon: IconUsers,
-    },
-    {
       href: "/knowledge-base",
       label: "Knowledge Base",
       tooltip: "Knowledge Base",
       icon: IconBook,
-    },
-    {
-      href: "/settings",
-      label: "Settings",
-      tooltip: "Settings",
-      icon: IconSettings,
     },
   ]
 
