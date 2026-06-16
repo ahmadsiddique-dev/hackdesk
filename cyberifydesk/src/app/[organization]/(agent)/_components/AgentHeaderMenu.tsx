@@ -22,7 +22,7 @@ export function AgentHeaderMenu({ fullName, role }: AgentHeaderMenuProps) {
 
   const { execute: executeLogout } = useApi(
     React.useCallback(
-      () => api.post("/api/auth/agent/logout").then((res) => res.data),
+      () => api.post("/api/auth/logout").then((res) => res.data),
       []
     )
   )

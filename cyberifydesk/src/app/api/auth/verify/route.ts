@@ -19,7 +19,7 @@ export const POST = catchAsyncRoute(async (request: Request) => {
   const accessToken = authHeader.split(" ")[1]
 
   const cookieStore = await cookies()
-  const refreshToken = cookieStore.get("refreshToken")?.value || cookieStore.get("customerRefreshToken")?.value
+  const refreshToken = cookieStore.get("refreshToken")?.value
 
   if (!refreshToken) {
     return NextResponse.json(

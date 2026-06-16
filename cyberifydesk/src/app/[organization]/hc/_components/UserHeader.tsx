@@ -39,7 +39,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
   const { execute: executeLogout } = useApi(
     React.useCallback(
       () =>
-        api.post("/api/auth/agent/logout", null, {
+        api.post("/api/auth/logout", null, {
           headers: { "X-Role": "customer" },
         }).then((res) => res.data),
       []

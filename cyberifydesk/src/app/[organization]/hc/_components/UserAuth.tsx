@@ -78,7 +78,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
     React.useCallback(
       (payload: any) =>
         api
-          .post("/api/auth/agent/signin", payload, {
+          .post("/api/auth/signin", payload, {
             headers: { "X-Role": "customer" },
           })
           .then((res) => res.data),
@@ -90,7 +90,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
     React.useCallback(
       (payload: any) =>
         api
-          .post("/api/auth/agent/signup", payload, {
+          .post("/api/auth/signup", payload, {
             headers: { "X-Role": "customer" },
           })
           .then((res) => res.data),
@@ -157,7 +157,7 @@ export function UserAuth({ organizationName }: UserAuthProps) {
   const onSubmit = async (data: CustomerAuthFormValues) => {
     setErrorMsg("")
     const url =
-      tab === "signin" ? "/api/auth/agent/signin" : "/api/auth/agent/signup"
+      tab === "signin" ? "/api/auth/signin" : "/api/auth/signup"
     try {
       const res = await executeVerify(url, {
         email: data.email,

@@ -54,7 +54,7 @@ export default function Page() {
     React.useCallback(
       (payload: { email: string }) =>
         axios
-          .post("/api/auth/agent/forgot-password/new", payload)
+          .post("/api/auth/forgot-password/new", payload)
           .then((res) => res.data),
       []
     )
@@ -68,7 +68,7 @@ export default function Page() {
     React.useCallback(
       (payload: { email: string; otp: string }) =>
         axios
-          .post("/api/auth/agent/forgot-password/verify", payload)
+          .post("/api/auth/forgot-password/verify", payload)
           .then((res) => res.data),
       []
     )
@@ -82,7 +82,7 @@ export default function Page() {
     React.useCallback(
       (payload: { email: string; password: string }) =>
         axios
-          .patch("/api/auth/agent/forgot-password/new", payload)
+          .patch("/api/auth/forgot-password/new", payload)
           .then((res) => res.data),
       []
     )

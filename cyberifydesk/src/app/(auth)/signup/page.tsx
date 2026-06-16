@@ -59,7 +59,7 @@ export default function Page() {
           role: string
           otp?: string
         }
-      ) => api.post("/api/auth/agent/signup", payload).then((res) => res.data),
+      ) => api.post("/api/auth/signup", payload).then((res) => res.data),
       []
     )
   )
@@ -72,7 +72,7 @@ export default function Page() {
   } = useApi(
     React.useCallback(
       (payload: { email: string; otp: string }) =>
-        api.patch("/api/auth/agent/signup", payload).then((res) => res.data),
+        api.patch("/api/auth/signup", payload).then((res) => res.data),
       []
     )
   )

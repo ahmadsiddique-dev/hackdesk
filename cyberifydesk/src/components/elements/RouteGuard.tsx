@@ -38,7 +38,7 @@ export function RouteGuard({ children }: RouteGuardProps) {
     React.useCallback(
       () =>
         api
-          .post("/api/auth/agent/verify")
+          .post("/api/auth/verify")
           .then((res) => res.data),
       []
     )
@@ -48,7 +48,7 @@ export function RouteGuard({ children }: RouteGuardProps) {
     React.useCallback(
       () =>
         api
-          .post("/api/auth/agent/verify", null, {
+          .post("/api/auth/verify", null, {
             headers: { "X-Role": "customer" },
           })
           .then((res) => res.data),

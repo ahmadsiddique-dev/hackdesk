@@ -53,7 +53,7 @@ export default function Page() {
   } = useApi(
     React.useCallback(
       (payload: { email: string; password: string }) =>
-        api.post("/api/auth/agent/signin", payload).then((res) => res.data),
+        api.post("/api/auth/signin", payload).then((res) => res.data),
       []
     )
   )
@@ -65,7 +65,7 @@ export default function Page() {
   } = useApi(
     React.useCallback(
       (payload: { email: string; otp: string }) =>
-        api.patch("/api/auth/agent/signin", payload).then((res) => res.data),
+        api.patch("/api/auth/signin", payload).then((res) => res.data),
       []
     )
   )
