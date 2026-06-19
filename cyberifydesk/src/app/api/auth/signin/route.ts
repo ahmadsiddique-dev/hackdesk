@@ -7,19 +7,17 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   const { email, password } = await request.json()
 
-  console.log("Received SignIn Request", { email, password })
-  await dbConnect()
-
   if (!email || !password) {
     return NextResponse.json(
       { success: false, message: "Email and password are required" },
       { status: 400 }
     )
   }
+  
+  await dbConnect();
 
   const user = await User.findOne({ email })
 
-  console.log("User Found", user)
   if (!user) {
     return NextResponse.json(
       { success: false, message: "Invalid email or password" },
@@ -36,7 +34,6 @@ export async function POST(request: Request) {
 
   const isMatch = await user.isPasswordCorrect(password)
 
-  console.log("Password Match", isMatch)
   if (!isMatch) {
     return NextResponse.json(
       { success: false, message: "Invalid email or password" },
@@ -51,7 +48,6 @@ export async function POST(request: Request) {
 
   await sendOtpEmail(user.email, user.fullName, generatedOtp)
 
-  console.log("Generated OTP", generatedOtp)
   return NextResponse.json({
     success: true,
     message: "OTP sent to your email",
@@ -61,15 +57,15 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   const { email, otp } = await request.json()
-
-  await dbConnect()
-
+  
   if (!email || !otp) {
     return NextResponse.json(
       { success: false, message: "Email and OTP are required" },
       { status: 400 }
     )
   }
+  
+  await dbConnect()
 
   const user = await User.findOne({ email })
 

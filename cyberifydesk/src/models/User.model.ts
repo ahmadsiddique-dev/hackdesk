@@ -7,10 +7,10 @@ export interface IUser extends Document {
   email: string
   password: string
   isVerified: boolean
-  organization: string | null
+  organization: string | null // FIX: Organization is required for client and agent so I removed null
   role: "user" | "agent"
   otp: string | null
-  refreshToken: string | null
+  refreshToken: string | null // FIX: Not null could be string but see later
   isPasswordCorrect(password: string): Promise<boolean>
   generateAccessToken(): string
   generateRefreshToken(): string
@@ -26,8 +26,7 @@ const UserSchema: Schema = new Schema<IUser>(
     email: {
       type: String,
       required: true,
-      unique: true,
-      lowercase: true,
+      unique: true, // Single email can be use either as an Agnet or as a User otherwise it could create proplems
       trim: true,
     },
     password: {
@@ -48,10 +47,10 @@ const UserSchema: Schema = new Schema<IUser>(
     },
     otp: {
       type: String,
-      default: null,
+      default: null, 
     },
     refreshToken: {
-      type: String,
+      type: String, // Again should be changed but for now we are just dignosing change later
       default: null,
     }
   },
@@ -61,7 +60,7 @@ const UserSchema: Schema = new Schema<IUser>(
 )
   
 UserSchema.pre<IUser>("save", async function () {
-    if(!this.isModified("password")) return;
+    if(!this.isModified("password")) return; // I hope in new versions we don't do next();
 
     this.password = await bcrypt.hash(this.password, 10)
 })
@@ -80,7 +79,7 @@ UserSchema.methods.generateAccessToken = function(){
         },
         process.env.ACCESS_TOKEN_SECRET || "access_token_agar_na_mila",
         {
-            expiresIn: (process.env.ACCESS_TOKEN_EXPIRY || "1d") as any
+            expiresIn: (process.env.ACCESS_TOKEN_EXPIRY || "1d") as any // We can hard code but i have chull
         }
     )
 }
@@ -91,7 +90,7 @@ UserSchema.methods.generateRefreshToken = function(){
         },
         process.env.REFRESH_TOKEN_SECRET || "refresh_token_agar_na_mila",
         {
-            expiresIn: (process.env.REFRESH_TOKEN_EXPIRY || "7d") as any
+            expiresIn: (process.env.REFRESH_TOKEN_EXPIRY || "7d") as any // Ya anotaion ky bina error dy raha ha
         }
     )
 }

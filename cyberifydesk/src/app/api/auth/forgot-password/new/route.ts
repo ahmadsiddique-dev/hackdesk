@@ -10,19 +10,13 @@ export const POST = catchAsyncRoute(async (request: Request) => {
   const { email } = await request.json()
 
   if (!email) {
-    return NextResponse.json(
-      { error: "Email is required" },
-      { status: 400 }
-    )
+    return NextResponse.json({ error: "Email is required" }, { status: 400 })
   }
 
   const user = await User.findOne({ email })
 
   if (!user) {
-    return NextResponse.json(
-      { error: "User not found" },
-      { status: 404 }
-    )
+    return NextResponse.json({ error: "User not found" }, { status: 404 })
   }
 
   const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString()
@@ -52,10 +46,7 @@ export const PATCH = catchAsyncRoute(async (request: Request) => {
   const user = await User.findOne({ email })
 
   if (!user) {
-    return NextResponse.json(
-      { error: "User not found" },
-      { status: 404 }
-    )
+    return NextResponse.json({ error: "User not found" }, { status: 404 })
   }
 
   user.password = password

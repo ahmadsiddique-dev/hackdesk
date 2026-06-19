@@ -28,8 +28,8 @@ export function SubscribeForm() {
       </div>
 
       {submitted ? (
-        <div className="text-xs font-semibold text-emerald-500 md:text-right">
-          Thank you! Your Cyberify AI workspace is spinning up.
+        <div className="text-xs font-semibold text-amber-500 md:text-right">
+          We are not accepting mails right now.
         </div>
       ) : (
         <form

@@ -1,5 +1,6 @@
 // TODO: Error handling and edge cases ( OTP expiration, rate limiting, and if not verified email can be used by anyone else )
 
+// BTW FYI please go through this code keeping in mind both "Clinet" and "Agnet" signup
 import dbConnect from "@/lib/dbConnection"
 import { User } from "@/models/User.model"
 import { sendOtpEmail } from "@/lib/sendEmail"
@@ -8,18 +9,26 @@ import { catchAsyncRoute } from "@/lib/catchAsyncRoute"
 import { cookies } from "next/headers"
 import { slugify } from "@/lib/utils"
 
+export interface ISignupResponse {
+  name: string
+  email: string
+  password: string
+  organizationName: string
+  role: string
+}
+
 export const POST = catchAsyncRoute(async (request: Request) => {
+  
+  const { name, email, password, organizationName, role } = await request.json() as ISignupResponse // If we don't anotate it give error I don't know why
+  
+  [name, email, password, organizationName, role].forEach((field) => {
+    if (!field) {
+      return NextResponse.json({ error: "All Fields are required!" }, { status: 400 })
+    }
+  })
+  
   await dbConnect()
-
-  const { name, email, password, organizationName, role } = await request.json()
-
-  if (!name || !email || !password || !organizationName || !role) {
-    return NextResponse.json(
-      { error: "Missing required fields" },
-      { status: 400 }
-    )
-  }
-
+  
   const userExist = await User.findOne({ email })
 
 
@@ -74,8 +83,8 @@ export const PATCH = catchAsyncRoute(async (request: Request) => {
     return NextResponse.json({ error: "Invalid OTP" }, { status: 400 })
   }
 
-  const accessToken = user.generateAccessToken()
-  const refreshToken = user.generateRefreshToken()
+  const accessToken = await user.generateAccessToken()
+  const refreshToken = await user.generateRefreshToken()
 
   user.otp = null
   user.isVerified = true
@@ -84,12 +93,13 @@ export const PATCH = catchAsyncRoute(async (request: Request) => {
 
   const cookieStore = await cookies()
   const cookieName = user.role === "agent" ? "refreshToken" : "customerRefreshToken"
+
   cookieStore.set(cookieName, refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 7, //  Seven days is enough ig
   })
 
   return NextResponse.json({

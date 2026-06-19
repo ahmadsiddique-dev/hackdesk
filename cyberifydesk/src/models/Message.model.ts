@@ -2,8 +2,8 @@ import mongoose, { Schema, Document } from "mongoose"
 
 export interface IMessage extends Document {
   ticketId: mongoose.Types.ObjectId
-  senderId?: mongoose.Types.ObjectId | null 
-  senderType: "user" | "agent" | "system"
+  senderId?: mongoose.Types.ObjectId
+  senderType: "user" | "agent" // FIX: Actually we are not making AI part of the conversation so removing System
   message: string
   createdAt: Date
 }
@@ -17,12 +17,11 @@ const MessageSchema: Schema = new Schema<IMessage>(
     },
     senderId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
-      default: null,
+      ref: "User"
     },
     senderType: {
       type: String,
-      enum: ["user", "agent", "system"],
+      enum: ["user", "agent"],
       required: true,
     },
     message: {

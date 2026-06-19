@@ -1,3 +1,4 @@
+// ahh! I will try my best to make you understand with comments also find /verify mindmap here: https://app.eraser.io/workspace/WyhROF8MzNqoAk3g7GGL?origin=share
 import dbConnect from "@/lib/dbConnection"
 import { User } from "@/models/User.model"
 import { cookies } from "next/headers"
@@ -8,6 +9,7 @@ import { catchAsyncRoute } from "@/lib/catchAsyncRoute"
 export const POST = catchAsyncRoute(async (request: Request) => {
   await dbConnect()
 
+  // Getting Access Token
   const authHeader = request.headers.get("authorization")
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return NextResponse.json(
@@ -15,19 +17,24 @@ export const POST = catchAsyncRoute(async (request: Request) => {
       { status: 401 }
     )
   }
-
   const accessToken = authHeader.split(" ")[1]
 
-  let isCustomer = request.headers.get("x-role") === "customer"
+  // Getting Role
+  let isCustomer = request.headers.get("x-role") === "customer" // We should actullly rely on token not x-role but that is fine because i have also seen this pattern in many auth systems
   if (!isCustomer && accessToken) {
     try {
       const decoded = jwt.decode(accessToken) as any
       if (decoded && decoded.role === "user") {
         isCustomer = true
       }
-    } catch (e) {}
+    } catch (e) {
+      return NextResponse.json(
+        { error: e instanceof Error ? e.message : "Something went wrong" },
+        { status: 500 }
+      )
+    }
   }
-
+  
   const cookieName = isCustomer ? "customerRefreshToken" : "refreshToken"
   const cookieStore = await cookies()
   const refreshToken = cookieStore.get(cookieName)?.value
@@ -60,7 +67,9 @@ export const POST = catchAsyncRoute(async (request: Request) => {
     }
 
     const user = await User.findById(decodedAccess._id)
-    if (!user || (user.role !== "agent" && user.role !== "user")) {
+
+    // (!user || || (user.role !== "agent" && user.role !== "user")) // mongoose shema only stores "agent" and "user" this will never fullfil
+    if (!user) {
       return NextResponse.json(
         { error: "Access denied. User not found or incorrect role." },
         { status: 403 }
@@ -80,15 +89,15 @@ export const POST = catchAsyncRoute(async (request: Request) => {
   } catch (err: any) {
     if (err.name === "TokenExpiredError" || err.name === "JsonWebTokenError") {
       try {
-        const decodedRefresh = jwt.verify(
-          refreshToken,
-          refreshTokenSecret
-        ) as {
+        const decodedRefresh = jwt.verify(refreshToken, refreshTokenSecret) as {
           _id: string
         }
 
         const user = await User.findById(decodedRefresh._id)
-        if (!user || user.refreshToken !== refreshToken || (user.role !== "agent" && user.role !== "user")) {
+        if (
+          !user ||
+          user.refreshToken !== refreshToken
+        ) {
           return NextResponse.json(
             { error: "Session expired. Please sign in again." },
             { status: 401 }
@@ -101,7 +110,8 @@ export const POST = catchAsyncRoute(async (request: Request) => {
         user.refreshToken = newRefreshToken
         await user.save()
 
-        const cookieName = user.role === "agent" ? "refreshToken" : "customerRefreshToken"
+        const cookieName =
+          user.role === "agent" ? "refreshToken" : "customerRefreshToken"
         cookieStore.set(cookieName, newRefreshToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
