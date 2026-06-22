@@ -158,18 +158,16 @@ export default function Page() {
     <AuthLayout backLink="/signin" backText="Back to Sign In">
       <div className="relative w-full max-w-md rounded-2xl border border-border/40 bg-card/30 p-8 shadow-2xl backdrop-blur-md">
         <div className="mb-6 flex flex-col items-center text-center">
-          <Image
-            src="/logo.png"
-            alt="Cyberify Desk Logo"
-            width={40}
-            height={40}
-            className="mb-4 size-10 object-contain"
+          <img
+            src="https://assets.hackclub.com/flag-standalone.svg"
+            alt="HackDesk Logo"
+            className="mb-4 h-10 object-contain"
           />
           <h1 className="mb-2 text-2xl font-extrabold tracking-tight">
             Reset Password
           </h1>
           <p className="text-xs text-muted-foreground">
-            Recover your Cyberify Desk account password
+            Recover your HackDesk account password
           </p>
         </div>
 
@@ -179,7 +177,7 @@ export default function Page() {
               <div className="absolute top-3.5 right-6 left-6 z-0 h-0.5 -translate-y-1/2">
                 <div className="h-full w-full bg-border" />
                 <div
-                  className="absolute top-0 left-0 h-full bg-orange-500 transition-all duration-500"
+                  className="absolute top-0 left-0 h-full bg-red-500 transition-all duration-500"
                   style={{
                     width:
                       currentStep === 1
@@ -196,9 +194,9 @@ export default function Page() {
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
                     currentStep > 1
-                      ? "border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-500/20"
+                      ? "border-red-500 bg-red-500 text-white shadow-md shadow-red-500/20"
                       : currentStep === 1
-                        ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
+                        ? "border-red-500 font-bold text-red-500 ring-2 ring-red-500/20"
                         : "border-border text-muted-foreground"
                   )}
                 >
@@ -221,9 +219,9 @@ export default function Page() {
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
                     currentStep > 2
-                      ? "border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-500/20"
+                      ? "border-red-500 bg-red-500 text-white shadow-md shadow-red-500/20"
                       : currentStep === 2
-                        ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
+                        ? "border-red-500 font-bold text-red-500 ring-2 ring-red-500/20"
                         : "border-border text-muted-foreground"
                   )}
                 >
@@ -246,7 +244,7 @@ export default function Page() {
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
                     currentStep === 3
-                      ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
+                      ? "border-red-500 font-bold text-red-500 ring-2 ring-red-500/20"
                       : "border-border text-muted-foreground"
                   )}
                 >
@@ -282,7 +280,7 @@ export default function Page() {
                 workspace...
               </p>
             </div>
-            <IconLoader2 className="mt-2 size-5 animate-spin text-orange-500" />
+            <IconLoader2 className="mt-2 size-5 animate-spin text-red-500" />
           </div>
         ) : (
           <form
@@ -421,7 +419,7 @@ export default function Page() {
                   type="button"
                   onClick={handleNextStep}
                   disabled={isSubmitting}
-                  className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-5 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
+                  className="grow rounded-full bg-linear-to-r from-red-500 to-rose-600 py-5 font-semibold text-white shadow-md shadow-red-500/10 hover:from-red-600 hover:to-rose-700"
                 >
                   {isSubmitting ? (
                     <>
@@ -439,7 +437,7 @@ export default function Page() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-5 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
+                  className="grow rounded-full bg-linear-to-r from-red-500 to-rose-600 py-5 font-semibold text-white shadow-md shadow-red-500/10 hover:from-red-600 hover:to-rose-700"
                 >
                   {isSubmitting ? (
                     <>

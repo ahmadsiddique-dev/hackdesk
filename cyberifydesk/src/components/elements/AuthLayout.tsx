@@ -32,7 +32,7 @@ export function AuthLayout({ children, backLink, backText }: AuthLayoutProps) {
       {children}
 
       <footer className="text-2xs mt-16 py-6 text-center text-muted-foreground">
-        <span>Cyberify AI Support Desk built by Ahmad Siddique</span>
+        <span>HackDesk Open Source Helpdesk built by Ahmad Siddique</span>
       </footer>
     </div>
   )

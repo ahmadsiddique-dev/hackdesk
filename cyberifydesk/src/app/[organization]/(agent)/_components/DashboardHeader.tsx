@@ -14,7 +14,7 @@ export function DashboardHeader({
       <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="h-4 mt-[7px] mr-1 self-center" />
+          <Separator orientation="vertical" className="h-4 mt-1.75 mr-1 self-center" />
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             {title}
           </span>

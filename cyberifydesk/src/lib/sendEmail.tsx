@@ -22,15 +22,15 @@ const OtpEmail = ({ name, otp }: OtpEmailProps) => (
   <Html lang="en">
     <Head />
     <Body style={{ fontFamily: "sans-serif", backgroundColor: "#f9f9f9", padding: "20px" }}>
-      <Preview>Verify your Cyberify Desk Account</Preview>
+      <Preview>Verify your HackDesk Account</Preview>
       <Container style={{ backgroundColor: "#ffffff", padding: "30px", borderRadius: "8px", maxWidth: "500px", margin: "0 auto" }}>
         <Heading style={{ fontSize: "24px", color: "#333", marginBottom: "16px" }}>Verification Code</Heading>
         <Text style={{ fontSize: "16px", color: "#555", lineHeight: "1.5" }}>Hi {name},</Text>
         <Text style={{ fontSize: "16px", color: "#555", lineHeight: "1.5" }}>
-          Thank you for registering at Cyberify Desk. Please use the following One-Time Password (OTP) to complete your signup process. This code is valid for 10 minutes:
+          Thank you for registering at HackDesk. Please use the following One-Time Password (OTP) to complete your signup process. This code is valid for 10 minutes:
         </Text>
         <Section style={{ textAlign: "center", margin: "24px 0" }}>
-          <span style={{ fontSize: "32px", fontWeight: "bold", color: "#ea580c", letterSpacing: "4px", backgroundColor: "#f3f4f6", padding: "12px 24px", borderRadius: "6px", display: "inline-block" }}>
+          <span style={{ fontSize: "32px", fontWeight: "bold", color: "#ec3750", letterSpacing: "4px", backgroundColor: "#f3f4f6", padding: "12px 24px", borderRadius: "6px", display: "inline-block" }}>
             {otp}
           </span>
         </Section>
@@ -44,9 +44,9 @@ const OtpEmail = ({ name, otp }: OtpEmailProps) => (
 
 export async function sendOtpEmail(email: string, name: string, otp: string) {
   const { data, error } = await resend.emails.send({
-    from: "Cyberify Desk <me@ahmadsiddique.dev>",
+    from: "HackDesk <me@ahmadsiddique.dev>",
     to: [email],
-    subject: "Verify your Cyberify Desk Account",
+    subject: "Verify your HackDesk Account",
     react: <OtpEmail name={name} otp={otp} />,
   })
 

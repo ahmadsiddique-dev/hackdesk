@@ -40,12 +40,12 @@ export function Footer() {
 
         <div className="text-2xs flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-8 text-muted-foreground sm:flex-row">
           <div>
-            <span className="font-bold text-foreground">Cyberify Desk</span>{" "}
+            <span className="font-bold text-foreground">HackDesk</span>{" "}
             &copy; {new Date().getFullYear()} All rights reserved.
           </div>
           <div className="flex items-center gap-1">
             <span>made with &lt;3 by</span>
-            <span className="font-semibold text-foreground underline decoration-orange-500/50 underline-offset-4">
+            <span className="font-semibold text-foreground underline decoration-red-500/50 underline-offset-4">
               Ahmd Siddique
             </span>
           </div>

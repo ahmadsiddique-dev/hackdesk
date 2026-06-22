@@ -9,62 +9,62 @@ export function Features() {
   return (
     <section id="features" className="border-t border-border/40 py-20 md:py-28">
       <div className="mx-auto mb-16 max-w-3xl text-center">
-        <h2 className="mb-3 text-xs font-bold tracking-widest text-orange-600 uppercase dark:text-orange-400">
-          Enterprise Power
+        <h2 className="mb-3 text-xs font-bold tracking-widest text-red-600 uppercase dark:text-red-400">
+          Hacker Superpowers
         </h2>
         <p className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Everything you need to automate support.
+          Everything you need to manage hacker queries.
         </p>
         <p className="text-sm text-muted-foreground sm:text-base">
-          Say goodbye to manual categorization, typing boilerplate answers, and
-          searching folders. Cyberify automates it all instantly.
+          An open-source ticket system built specifically to help you handle dev questions,
+          triage issues, and guide builders through bugs.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 transition-transform group-hover:scale-110 dark:text-orange-400">
+        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/5">
+          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-red-500/10 text-red-600 transition-transform group-hover:scale-110 dark:text-red-400">
             <IconBrain />
           </div>
-          <h3 className="mb-2 text-lg font-bold">AI Ticket Assistant</h3>
+          <h3 className="mb-2 text-lg font-bold">AI Issue Assistant</h3>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Automatically generates summaries, priority flags, and root cause
-            analysis the second a ticket is made.
+            Automatically summarizes code context, highlights dependencies, and flags blocker
+            priority as soon as an issue is created.
           </p>
         </div>
 
-        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 transition-transform group-hover:scale-110 dark:text-orange-400">
+        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/5">
+          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-red-500/10 text-red-600 transition-transform group-hover:scale-110 dark:text-red-400">
             <IconMessage2 />
           </div>
-          <h3 className="mb-2 text-lg font-bold">One-Click AI Replies</h3>
+          <h3 className="mb-2 text-lg font-bold">One-Click Hacker Replies</h3>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Empowers support agents to draft contextual, hyper-professional
-            responses instantly.
+            Drafts code-aware and friendly responses to support tickets instantly, saving
+            maintainers from repetitive formatting.
           </p>
         </div>
 
-        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 transition-transform group-hover:scale-110 dark:text-orange-400">
+        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/5">
+          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-red-500/10 text-red-600 transition-transform group-hover:scale-110 dark:text-red-400">
             <IconDatabase />
           </div>
-          <h3 className="mb-2 text-lg font-bold">Instant RAG Knowledge Base</h3>
+          <h3 className="mb-2 text-lg font-bold">Instant Docs RAG</h3>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Deflects incoming tickets by answering user questions directly from
-            uploaded PDF/TXT manuals.
+            Auto-solves technical questions by retrieving answers directly from your project's
+            wiki, docs, and readme files.
           </p>
         </div>
 
-        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 transition-transform group-hover:scale-110 dark:text-orange-400">
+        <div className="group relative rounded-2xl border border-border/40 bg-card/30 p-6 transition-all hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/5">
+          <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-red-500/10 text-red-600 transition-transform group-hover:scale-110 dark:text-red-400">
             <IconGitCommit />
           </div>
           <h3 className="mb-2 text-lg font-bold">
-            Transparent Ticket Timelines
+            Collaborative Timelines
           </h3>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Complete activity logging tracking everything from creation to
-            ultimate resolution.
+            Open timeline tracking from issue creation, team assignment, to pull-request
+            resolutions and closing commits.
           </p>
         </div>
       </div>

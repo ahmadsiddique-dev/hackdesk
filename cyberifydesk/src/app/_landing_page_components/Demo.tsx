@@ -8,59 +8,59 @@ import { IconCircleCheck, IconRobot, IconSparkles } from "@tabler/icons-react"
 const clientTickets = [
   {
     id: "ticket-1",
-    title: "RAG Knowledge Base failed to parse custom PDF manual",
-    status: "RAG Self-Solved",
+    title: "WebUSB connection drops during accelerometer read loop",
+    status: "Docs Bot Solved",
     priority: "High",
     time: "2 mins ago",
-    desc: "Uploaded our 200-page service manual in PDF format, but queries about Section 4 return empty answers.",
-    category: "Integration",
+    desc: "We are reading sensor data in a 60Hz loop via serial over WebUSB, but the stream hangs after about 15 seconds. Chrome console shows transfer error.",
+    category: "WebUSB",
     aiSummary:
-      "The RAG pipeline failed to parse a 200-page PDF document due to size constraints. The AI model successfully recommended chunking the document into sections.",
+      "USB stream buffer overflow caused by high frequency polling without buffer release. Resolved by suggesting buffer flushing or adding a client-side throttle.",
     timeline: [
       {
-        status: "Ticket Created",
+        status: "Issue Opened",
         time: "2 mins ago",
-        detail: "Ticket submitted by client via portal.",
+        detail: "Hacker opened ticket under project tracker.",
       },
       {
-        status: "RAG Analysis",
+        status: "Docs Search",
         time: "1 min ago",
-        detail: "AI searched 'kb_manual_v2.db' and identified section overlap.",
+        detail: "AI scanned WebUSB helper guide and identified buffer limitations.",
       },
       {
-        status: "Self-Solved",
+        status: "Auto-Resolved",
         time: "Just now",
         detail:
-          "RAG recommended Section 4 table-extraction fix. Client marked as resolved.",
+          "Suggested buffer flushing instructions. Hacker confirmed stream is stable.",
       },
     ],
   },
   {
     id: "ticket-2",
-    title: "Unable to set up custom webhook for Slack notifications",
-    status: "Agent Review",
+    title: "Custom manifest rules blocking Dev Server CORS requests",
+    status: "Maintainer Review",
     priority: "Medium",
     time: "1 hour ago",
-    desc: "Webhooks fail validation test when executing Slack app payload rules. Need help debugging headers.",
-    category: "Webhooks",
+    desc: "Trying to test our Next.js frontend with local server backend, but getting blocked by CORS errors on our manifest endpoint.",
+    category: "CORS / Manifest",
     aiSummary:
-      "Slack webhooks are failing with a 400 Bad Request error. Root cause is likely missing Content-Type header in the validation packet.",
+      "CORS blocks local dev server due to missing headers in next.config.js or development environment file configurations.",
     timeline: [
       {
-        status: "Ticket Created",
+        status: "Issue Opened",
         time: "1 hour ago",
-        detail: "Submitted via API endpoint.",
+        detail: "Submitted by hacker contributor.",
       },
       {
-        status: "AI Autotriage",
+        status: "AI Triaged",
         time: "58 mins ago",
         detail:
-          "AI assigned 'Medium' priority and flagged Slack integration team.",
+          "AI assigned 'Medium' priority and flagged config folder.",
       },
       {
-        status: "Agent Draft Ready",
+        status: "Draft Ready",
         time: "50 mins ago",
-        detail: "One-Click AI Reply generated and awaiting agent review.",
+        detail: "Suggested CORS config rewrite ready for maintainer review.",
       },
     ],
   },
@@ -75,15 +75,15 @@ export function Demo() {
   return (
     <section id="demo" className="border-t border-border/40 py-20 md:py-28">
       <div className="mx-auto mb-16 max-w-3xl text-center">
-        <h2 className="mb-3 text-xs font-bold tracking-widest text-orange-600 uppercase dark:text-orange-400">
-          Live Simulation
+        <h2 className="mb-3 text-xs font-bold tracking-widest text-red-600 uppercase dark:text-red-400">
+          Live Simulator
         </h2>
         <p className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Explore your new workspace.
+          Explore the builder workspace.
         </p>
         <p className="text-sm text-muted-foreground sm:text-base">
-          See the exact workspace built specifically for both sides of your
-          customer support ecosystem.
+          See the collaborative workspace built for both hackers seeking assistance
+          and project maintainers triaging issues.
         </p>
       </div>
 
@@ -97,13 +97,13 @@ export function Demo() {
               value="clients"
               className="rounded-full px-6 py-2 text-sm font-semibold"
             >
-              For Clients
+              For Hackers
             </TabsTrigger>
             <TabsTrigger
               value="agents"
               className="rounded-full px-6 py-2 text-sm font-semibold"
             >
-              For Agents
+              For Maintainers
             </TabsTrigger>
           </TabsList>
         </div>
@@ -124,16 +124,16 @@ export function Demo() {
                     onClick={() => setSelectedTicketId(ticket.id)}
                     className={`w-full rounded-xl border p-4 text-left transition-all ${
                       selectedTicketId === ticket.id
-                        ? "border-orange-500 bg-orange-500/5"
+                        ? "border-red-500 bg-red-500/5"
                         : "border-border/40 bg-background/50 hover:border-border/80"
                     }`}
                   >
                     <div className="mb-1.5 flex items-center justify-between">
                       <span
                         className={`text-2xs rounded-full px-2 py-0.5 font-bold ${
-                          ticket.status.includes("Solved")
+                          ticket.status.includes("Solved") || ticket.status.includes("Bot")
                             ? "bg-emerald-500/10 text-emerald-500"
-                            : "bg-amber-500/10 text-amber-500"
+                            : "bg-red-500/10 text-red-500"
                         }`}
                       >
                         {ticket.status}
@@ -197,8 +197,9 @@ export function Demo() {
                         <div
                           className={`flex size-5 shrink-0 items-center justify-center rounded-full ${
                             item.status.includes("Solved") ||
-                            item.status.includes("Autotriage")
-                              ? "bg-orange-600 text-white"
+                            item.status.includes("Triaged") ||
+                            item.status.includes("Resolved")
+                              ? "bg-red-600 text-white"
                               : "border border-border bg-muted text-muted-foreground"
                           }`}
                         >
@@ -233,19 +234,19 @@ export function Demo() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="flex flex-col gap-4 lg:col-span-1">
               <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-                Agent Queue
+                Maintainer Queue
               </span>
-              <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-4">
+              <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="text-2xs rounded-full bg-amber-500/10 px-2 py-0.5 font-bold text-amber-500">
+                  <span className="text-2xs rounded-full bg-red-500/10 px-2 py-0.5 font-bold text-red-500">
                     Needs Reply
                   </span>
                   <span className="text-2xs text-muted-foreground">
-                    Priority: High
+                    Priority: Medium
                   </span>
                 </div>
                 <h4 className="mb-1 text-sm font-bold">
-                  Slack notifications webhook header error
+                  Dev Server CORS blocks manifest requests
                 </h4>
                 <span className="text-xs text-muted-foreground">
                   Assigned to Ahmad Siddique
@@ -262,10 +263,10 @@ export function Demo() {
                   </span>
                 </div>
                 <h4 className="mb-1 text-sm font-bold">
-                  Billing query about annual tier conversion
+                  Fix typos in webusb setup documentation
                 </h4>
                 <span className="text-xs text-muted-foreground">
-                  Self-Solved by RAG Bot
+                  Self-Solved by Docs Bot
                 </span>
               </div>
             </div>
@@ -273,13 +274,13 @@ export function Demo() {
             <div className="flex flex-col gap-6 rounded-xl border border-border/40 bg-background/50 p-6 lg:col-span-2">
               <div className="flex items-center justify-between border-b border-border/40 pb-4">
                 <div className="flex items-center gap-2">
-                  <IconRobot className="size-5 animate-bounce text-orange-500" />
+                  <IconRobot className="size-5 animate-bounce text-red-500" />
                   <div>
                     <span className="text-2xs font-bold tracking-wider text-muted-foreground uppercase">
                       AI Copilot Analysis
                     </span>
-                    <h3 className="text-sm font-bold text-orange-500 dark:text-orange-400">
-                      Autocompleting Slack webhook ticket
+                    <h3 className="text-sm font-bold text-red-500 dark:text-red-400">
+                      Triaging Dev Server CORS issue
                     </h3>
                   </div>
                 </div>
@@ -289,15 +290,13 @@ export function Demo() {
               </div>
 
               <div className="flex flex-col gap-5">
-                <div className="rounded-xl border border-orange-500/10 bg-orange-500/5 p-4">
-                  <div className="mb-1 flex items-center gap-1.5 text-xs font-bold text-orange-600 dark:text-orange-400">
+                <div className="rounded-xl border border-red-500/10 bg-red-500/5 p-4">
+                  <div className="mb-1 flex items-center gap-1.5 text-xs font-bold text-red-600 dark:text-red-400">
                     <IconSparkles className="size-4" />
                     <span>AI Autotriage Summary</span>
                   </div>
                   <p className="text-xs leading-relaxed text-foreground/90">
-                    Webhook call fails due to invalid JSON payload header
-                    definitions. Recommend instructing user to inject
-                    Content-Type headers explicitly before payload transmission.
+                    Front-end request is blocked by CORS due to mismatched headers in development configurations. Suggest updating origin configuration in next.config.ts to allow localhost ports.
                   </p>
                 </div>
 
@@ -307,13 +306,11 @@ export function Demo() {
                   </span>
                   <div className="rounded-xl border border-border bg-card p-4">
                     <p className="text-xs leading-relaxed text-foreground">
-                      Hello Ahmad, it looks like your webhook POST request is
-                      missing the standard payload parameters. Please make sure
-                      that you pass the Header parameter:{" "}
+                      Hey there! It looks like your dev server is rejecting requests due to local CORS configurations. Try updating your Next.js next.config.ts config to permit local dev endpoints, or add:{" "}
                       <code className="text-2xs rounded bg-muted px-1.5 py-0.5 font-mono">
-                        Content-Type: application/json
+                        Access-Control-Allow-Origin: *
                       </code>
-                      . Let me know if that resolves it!
+                       to your local headers temporarily. Let us know if that works!
                     </p>
                   </div>
                 </div>
@@ -325,7 +322,7 @@ export function Demo() {
                   >
                     Decline
                   </Button>
-                  <Button className="rounded-full bg-orange-600 font-semibold text-white shadow-md shadow-orange-500/10 hover:bg-orange-500">
+                  <Button className="rounded-full bg-red-600 font-semibold text-white shadow-md shadow-red-500/10 hover:bg-red-500">
                     Approve & Send Reply
                   </Button>
                 </div>

@@ -156,18 +156,16 @@ export default function Page() {
     <AuthLayout backLink="/" backText="Back to Home">
       <div className="relative w-full max-w-md rounded-2xl border border-border/40 bg-card/30 p-8 shadow-2xl backdrop-blur-md">
         <div className="mb-6 flex flex-col items-center text-center">
-          <Image
-            src="/logo.png"
-            alt="Cyberify Desk Logo"
-            width={40}
-            height={40}
-            className="mb-4 size-10 object-contain"
+          <img
+            src="https://assets.hackclub.com/flag-standalone.svg"
+            alt="HackDesk Logo"
+            className="mb-4 h-10 object-contain"
           />
           <h1 className="mb-2 text-2xl font-extrabold tracking-tight">
             Create Account
           </h1>
           <p className="text-xs text-muted-foreground">
-            Get started with Cyberify Desk today
+            Get started with HackDesk today
           </p>
         </div>
 
@@ -177,7 +175,7 @@ export default function Page() {
               <div className="absolute top-3.5 right-6 left-6 z-0 h-0.5 -translate-y-1/2">
                 <div className="h-full w-full bg-border" />
                 <div
-                  className="absolute top-0 left-0 h-full bg-orange-500 transition-all duration-500"
+                  className="absolute top-0 left-0 h-full bg-red-500 transition-all duration-500"
                   style={{
                     width: currentStep === 1 ? "0%" : "100%",
                   }}
@@ -189,8 +187,8 @@ export default function Page() {
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
                     currentStep > 1
-                      ? "border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-500/20"
-                      : "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
+                      ? "border-red-500 bg-red-500 text-white shadow-md shadow-red-500/20"
+                      : "border-red-500 font-bold text-red-500 ring-2 ring-red-500/20"
                   )}
                 >
                   {currentStep > 1 ? <IconCheck className="size-4" /> : "1"}
@@ -210,7 +208,7 @@ export default function Page() {
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border bg-background text-xs transition-all duration-300",
                     currentStep === 2
-                      ? "border-orange-500 font-bold text-orange-500 ring-2 ring-orange-500/20"
+                      ? "border-red-500 font-bold text-red-500 ring-2 ring-red-500/20"
                       : "border-border text-muted-foreground"
                   )}
                 >
@@ -246,7 +244,7 @@ export default function Page() {
                 to your workspace...
               </p>
             </div>
-            <IconLoader2 className="mt-2 size-5 animate-spin text-orange-500" />
+             <IconLoader2 className="mt-2 size-5 animate-spin text-red-500" />
           </div>
         ) : (
           <form
@@ -337,7 +335,7 @@ export default function Page() {
                       <InputGroupInput
                         id="organizationName"
                         type="text"
-                        placeholder="Cyberify AI"
+                        placeholder="HackDesk Dev"
                         {...register("organizationName")}
                         aria-invalid={!!errors.organizationName}
                       />
@@ -411,7 +409,7 @@ export default function Page() {
                   type="button"
                   onClick={handleNextStep}
                   disabled={apiLoading}
-                  className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-5 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
+                  className="grow rounded-full bg-linear-to-r from-red-500 to-rose-600 py-5 font-semibold text-white shadow-md shadow-red-500/10 hover:from-red-600 hover:to-rose-700"
                 >
                   {apiLoading ? (
                     <>
@@ -429,7 +427,7 @@ export default function Page() {
                 <Button
                   type="submit"
                   disabled={verifyLoading}
-                  className="grow rounded-full bg-linear-to-r from-orange-600 to-amber-500 py-5 font-semibold text-white shadow-md shadow-orange-500/10 hover:from-orange-500 hover:to-amber-400"
+                  className="grow rounded-full bg-linear-to-r from-red-500 to-rose-600 py-5 font-semibold text-white shadow-md shadow-red-500/10 hover:from-red-600 hover:to-rose-700"
                 >
                   {verifyLoading ? (
                     <>
@@ -449,7 +447,7 @@ export default function Page() {
           <span>Already have an account? </span>
           <Link
             href="/signin"
-            className="font-semibold text-orange-500 hover:underline"
+            className="font-semibold text-red-500 hover:underline"
           >
             Sign In
           </Link>

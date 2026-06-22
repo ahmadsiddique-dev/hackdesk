@@ -3,30 +3,30 @@ import { IconStar } from "@tabler/icons-react"
 const testimonials = [
   {
     name: "Sarah Jenkins",
-    role: "VP of Support, VeloPay",
+    role: "Lead Organizer, HackOut Hackathon",
     quote:
-      "Before Cyberify Desk, our support agents were drowning in duplicate queries. Integrating our API docs took 3 minutes, and now the AI successfully self-solves 42% of our tickets. The productivity boost has been unbelievable.",
-    metric: "42% Deflection",
+      "Before HackDesk, our hackathon mentors were drowning in duplicate wifi and setup queries. Integrating our dev wikis took 3 minutes, and now the AI solves 42% of hacker questions automatically!",
+    metric: "42% Deflected",
     initials: "SJ",
-    gradient: "from-orange-500 to-amber-500",
+    gradient: "from-red-500 to-rose-500",
   },
   {
     name: "David Chen",
-    role: "Support Lead, DevFlow",
+    role: "Creator, DevFlow UI library",
     quote:
-      "The One-Click AI Replies are a game-changer. It gets the context of the ticket instantly and drafts responses with 95%+ accuracy. Our team's average response time dropped from 3 hours to under 2 minutes.",
-    metric: "-85% Response Time",
+      "The One-Click Hacker Replies are a game-changer. It gets the context of the issue instantly and drafts responses with 95%+ accuracy. Triage time dropped from hours to seconds.",
+    metric: "Instant Triage",
     initials: "DC",
-    gradient: "from-amber-500 to-orange-600",
+    gradient: "from-rose-500 to-red-600",
   },
   {
     name: "Elena Rostova",
-    role: "Customer Success Manager, CloudScale",
+    role: "Maintainer, CloudScale CLI",
     quote:
-      "We sync all of our technical manuals to the vector base, and the RAG engine answers complex technical questions with zero hallucination. Our clients get answers immediately instead of waiting for engineering.",
-    metric: "Zero Hallucination",
+      "We sync our dev manuals to the vector database, and the RAG engine answers complex configuration questions with zero hallucination. Our community gets answers immediately.",
+    metric: "Accurate Answers",
     initials: "ER",
-    gradient: "from-rose-500 to-orange-500",
+    gradient: "from-red-500 to-rose-600",
   },
 ]
 
@@ -37,32 +37,32 @@ export function Testimonials() {
       className="border-t border-border/40 py-20 md:py-28"
     >
       <div className="mx-auto mb-16 max-w-3xl text-center">
-        <h2 className="mb-3 text-xs font-bold tracking-widest text-orange-600 uppercase dark:text-orange-400">
+        <h2 className="mb-3 text-xs font-bold tracking-widest text-red-600 uppercase dark:text-red-400">
           Testimonials
         </h2>
         <p className="mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Trusted by fast-growing customer teams.
+          Loved by open-source maintainers.
         </p>
         <p className="text-sm text-muted-foreground sm:text-base">
-          See how companies are automating deflection, dropping response times,
-          and delighting customers.
+          See how developers are managing ticket triage, automating setup replies,
+          and keeping their communities happy.
         </p>
       </div>
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
         {testimonials.map((t) => (
           <div
             key={t.name}
-            className="group relative flex flex-col justify-between rounded-3xl border border-border/40 bg-card/30 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/30 hover:shadow-xl hover:shadow-orange-500/5"
+            className="group relative flex flex-col justify-between rounded-3xl border border-border/40 bg-card/30 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/30 hover:shadow-xl hover:shadow-red-500/5"
           >
-            <div className="absolute top-0 right-6 -translate-y-1/2 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-orange-600 uppercase backdrop-blur-sm dark:text-orange-400">
+            <div className="absolute top-0 right-6 -translate-y-1/2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-red-600 uppercase backdrop-blur-sm dark:text-red-400">
               {t.metric}
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <IconStar
-                    key={i}
-                    className="size-4 fill-orange-500 text-orange-500"
+                     key={i}
+                     className="size-4 fill-red-500 text-red-500"
                   />
                 ))}
               </div>

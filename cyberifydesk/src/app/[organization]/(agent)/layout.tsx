@@ -26,15 +26,13 @@ export default async function MainLayout({
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-0">
           <div className="flex items-center gap-2 px-4 py-4 border-b border-border/40 transition-all duration-200 ease-linear group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:gap-0">
-            <Image
-              src="/logo.png"
-              alt="Cyberify Desk Logo"
-              width={24}
-              height={24}
-              className="size-6 object-contain"
+            <img
+              src="https://assets.hackclub.com/flag-standalone.svg"
+              alt="HackDesk Logo"
+              className="h-6 object-contain"
             />
             <span className="font-extrabold text-sm tracking-tight text-foreground whitespace-nowrap transition-all duration-200 ease-linear opacity-100 max-w-37.5 group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 overflow-hidden">
-              Cyberify Desk
+              HackDesk
             </span>
           </div>
         </SidebarHeader>
@@ -51,7 +49,7 @@ export default async function MainLayout({
 
         <SidebarFooter className="border-t border-border/40 p-2">
           <div className="flex items-center gap-2 p-2 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center overflow-hidden transition-all duration-200 ease-linear">
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-orange-500/10 text-xs font-bold text-orange-500">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
               {user.fullName.charAt(0).toUpperCase()}
             </div>
             <div className="flex flex-col min-w-0 flex-1 group-data-[collapsible=icon]:hidden">

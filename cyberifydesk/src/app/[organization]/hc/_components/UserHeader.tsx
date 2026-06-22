@@ -61,15 +61,13 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
             href={`/${orgSlug}/hc`}
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <Image
-              src="/logo.png"
-              alt="Cyberify Desk Logo"
-              width={24}
-              height={24}
-              className="size-6 object-contain"
+            <img
+              src="https://assets.hackclub.com/flag-standalone.svg"
+              alt="HackDesk Logo"
+              className="h-6 object-contain"
             />
             <span className="font-extrabold text-sm tracking-tight text-foreground mr-4 hidden min-[400px]:inline-block">
-              Cyberify Desk
+              HackDesk
             </span>
           </Link>
 
@@ -81,7 +79,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                   className={cn(
                     "text-xs font-semibold transition-colors",
                     pathname === `/${orgSlug}/hc/new-ticket`
-                      ? "text-orange-500 font-bold"
+                      ? "text-primary font-bold"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
@@ -92,7 +90,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                   className={cn(
                     "text-xs font-semibold transition-colors",
                     pathname === `/${orgSlug}/hc/tickets`
-                      ? "text-orange-500 font-bold"
+                      ? "text-primary font-bold"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
@@ -116,7 +114,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                     className={cn(
                       "flex items-center text-2xs h-8 px-2.5 rounded-lg font-semibold transition-colors",
                       pathname === `/${orgSlug}/hc/new-ticket`
-                        ? "bg-orange-500/10 text-orange-500 font-bold"
+                        ? "bg-primary/10 text-primary font-bold"
                         : "text-foreground hover:bg-muted/60"
                     )}
                   >
@@ -127,7 +125,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                     className={cn(
                       "flex items-center text-2xs h-8 px-2.5 rounded-lg font-semibold transition-colors mt-0.5",
                       pathname === `/${orgSlug}/hc/tickets`
-                        ? "bg-orange-500/10 text-orange-500 font-bold"
+                        ? "bg-primary/10 text-primary font-bold"
                         : "text-foreground hover:bg-muted/60"
                     )}
                   >
@@ -183,7 +181,7 @@ export function HelpCenterHeader({ organizationName }: HelpCenterHeaderProps) {
                         setOpen(false)
                         handleLogout()
                       }}
-                      className="h-7 text-3xs px-2.5 rounded-md bg-linear-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 font-semibold text-white shadow-sm"
+                      className="h-7 text-3xs px-2.5 rounded-md bg-linear-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 font-semibold text-white shadow-sm"
                     >
                       Yes
                     </Button>

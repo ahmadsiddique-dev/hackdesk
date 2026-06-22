@@ -21,7 +21,6 @@ export async function fetchTickets(organizationId: string) {
   return result
 }
 
-// Ya mangta ham ko
 // {
 //       id: "TC-3024",
 //       customer: "Alex Rivera",

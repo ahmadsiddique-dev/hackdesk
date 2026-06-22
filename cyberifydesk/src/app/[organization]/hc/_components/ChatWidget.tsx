@@ -24,7 +24,7 @@ export function ChatWidget() {
   const [messages, setMessages] = React.useState<Message[]>([
     {
       id: "initial",
-      text: "Hello! Welcome to Cyberify Desk Live Support. How can we help you today?",
+      text: "Hello! Welcome to HackDesk Help Center. How can we help you today?",
       sender: "agent",
       timestamp: "Just now",
     },
@@ -94,7 +94,7 @@ export function ChatWidget() {
         id="chat-bubble-btn"
         onClick={() => setOpen(!open)}
         className={cn(
-          "flex size-14 items-center justify-center rounded-full bg-linear-to-r from-orange-600 to-amber-500 text-white shadow-xl transition-all duration-300 hover:scale-105 hover:from-orange-500 hover:to-amber-400",
+          "flex size-14 items-center justify-center rounded-full bg-linear-to-r from-red-500 to-rose-600 text-white shadow-xl transition-all duration-300 hover:scale-105 hover:from-red-600 hover:to-rose-700",
           open && "scale-90 rotate-90"
         )}
       >
@@ -110,11 +110,11 @@ export function ChatWidget() {
           id="chat-window"
           className="absolute right-0 bottom-16 flex h-112.5 w-80 animate-in flex-col rounded-2xl border border-border/40 bg-card/95 shadow-2xl backdrop-blur-md duration-300 slide-in-from-bottom-5 sm:w-96"
         >
-          <div className="flex items-center justify-between rounded-t-2xl border-b border-border/40 bg-linear-to-r from-orange-600/10 to-amber-500/10 px-4 py-3">
+          <div className="flex items-center justify-between rounded-t-2xl border-b border-border/40 bg-linear-to-r from-red-500/10 to-rose-600/10 px-4 py-3">
             <div className="flex items-center gap-2">
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-foreground">
-                  Cyberify Desk Support
+                  HackDesk Support
                 </span>
                 <span className="text-[10px] text-muted-foreground">
                   Agents are active
@@ -136,7 +136,7 @@ export function ChatWidget() {
                 className={cn(
                   "flex max-w-[80%] flex-col rounded-2xl px-3 py-2 text-xs",
                   msg.sender === "user"
-                    ? "self-end rounded-tr-none bg-orange-600/90 text-white"
+                    ? "self-end rounded-tr-none bg-red-600/90 text-white"
                     : "self-start rounded-tl-none border border-border/40 bg-muted/80 text-foreground"
                 )}
               >
@@ -155,7 +155,7 @@ export function ChatWidget() {
                   className={cn(
                     "mt-1 self-end text-[8px]",
                     msg.sender === "user"
-                      ? "text-orange-100"
+                      ? "text-red-100"
                       : "text-muted-foreground"
                   )}
                 >
@@ -183,12 +183,12 @@ export function ChatWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask us a question..."
-              className="flex-1 rounded-lg border border-border/40 bg-background/50 px-3 py-2 text-xs transition-all placeholder:text-muted-foreground/60 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-hidden"
+              className="flex-1 rounded-lg border border-border/40 bg-background/50 px-3 py-2 text-xs transition-all placeholder:text-muted-foreground/60 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-hidden"
             />
             <Button
               type="submit"
               size="icon"
-              className="size-8 rounded-lg bg-linear-to-r from-orange-600 to-amber-500 text-white hover:from-orange-500 hover:to-amber-400"
+              className="size-8 rounded-lg bg-linear-to-r from-red-500 to-rose-600 text-white hover:from-red-600 hover:to-rose-700"
             >
               <IconSend className="size-3.5" />
             </Button>

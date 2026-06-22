@@ -1,6 +1,6 @@
-# CYBERIFY DESK
+# HACKDESK
 
->  Ticket management system that helps organizations manage client queries through an AI-powered Help Center with RAG-based knowledge retrieval.
+> Ticket management system that helps organizations manage client queries through an AI-powered Help Center with RAG-based knowledge retrieval.
 
 ## Tech Stack
 
@@ -32,7 +32,7 @@ git clone https://github.com/ahmadsiddique-dev/cyberify-project
 cd cyberify-project
 ```
 
-### 1. CyberifyDesk (Next.js App)
+### 1. HackDesk (Next.js App)
 
 ```bash
 cd cyberifydesk
